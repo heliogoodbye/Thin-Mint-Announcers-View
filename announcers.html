@@ -12,6 +12,7 @@ Special thanks to:
 Michi-Chan
 Nashville Roller Derby
 Clarksville Roller Derby
+Texas Rollergirls
 
 Licensed under GNU GPL v3.0
 
@@ -2167,6 +2168,7 @@ body.light .j-row-clickable:hover,body.light .j-row-clickable:focus-visible{back
 .skater-stat-val{font-size:26px;font-weight:950;color:var(--score);font-variant-numeric:tabular-nums lining-nums;letter-spacing:-.04em;line-height:1;}
 .skater-stat-lbl{font-size:9px;font-weight:850;text-transform:uppercase;letter-spacing:.09em;color:var(--txt2);margin-top:4px;white-space:nowrap;}
 .skater-jams-section-title{font-size:10px;font-weight:950;text-transform:uppercase;letter-spacing:.12em;color:var(--txt2);margin-bottom:8px;}
+.skater-jam-legend{font-size:9px;color:var(--txt3);margin-bottom:9px;}
 .skater-jam-period-sep{font-size:9px;font-weight:950;text-transform:uppercase;letter-spacing:.14em;color:var(--txt3);padding:6px 5px 4px;border-bottom:1px solid var(--sep);margin-bottom:3px;}
 .skater-jams-list{display:flex;flex-direction:column;gap:4px;}
 .skater-jam-entry{display:flex;align-items:center;gap:8px;padding:7px 13px;border-radius:10px;border:1px solid transparent;min-width:0;overflow:hidden;}
@@ -2182,6 +2184,11 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
 .skater-jam-flags{display:flex;align-items:center;gap:4px;flex-shrink:0;}
 .skater-jam-empty{font-size:14px;color:var(--txt2);text-align:center;padding:22px 0;}
 .skater-stats-note{margin-top:12px;font-size:12px;color:var(--txt3);text-align:center;}
+/* Opponent filter pills */
+.skater-filter-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:11px;}
+.skater-filter-pill{font-size:10.5px;font-weight:850;padding:4px 13px;border-radius:999px;border:1px solid var(--border);background:var(--bg3);color:var(--txt2);cursor:pointer;transition:background .12s,color .12s,border-color .12s;user-select:none;}
+.skater-filter-pill:hover{background:var(--bg2);color:var(--txt);border-color:var(--txt3);}
+.skater-filter-pill.sj-pill-active{background:var(--lead-c);color:var(--bg);border-color:var(--lead-c);}
 /* Clickable jammer names in the recent + full jam history panels */
 .jam-hist-link{cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px;text-decoration-color:var(--txt3);border-radius:3px;transition:color .12s;}
 .jam-hist-link:hover,.jam-hist-link:focus-visible{color:var(--lead-c);text-decoration-color:var(--lead-c);outline:none;}
@@ -5452,12 +5459,44 @@ function buildSkaterStats(name, number, teamNum) {
   return { cleanName, number, teamNum: t, total, ptsFor, ptsAgainst, avgPts, leadPct, leadCount, jammedJams };
 }
 
-function renderSkaterStatsPopup(name, number, teamName, teamNum) {
-  const stats = buildSkaterStats(name, number, teamNum);
+// Context for the currently-open stats popup — allows pills to re-render without
+// re-reading live state, and resets the filter when a new jammer is opened.
+let _statsPopupCtx = null;
 
+function renderSkaterStatsPopup(name, number, teamName, teamNum, filterOpp) {
+  filterOpp = filterOpp || null;
+
+  const allStats = buildSkaterStats(name, number, teamNum);
+
+  // Collect unique opponents in game order (newest-first = insertion order of jammedJams)
+  const oppsMap = new Map(); // lowercase key → display name
+  for (const j of allStats.jammedJams) {
+    if (j.oppJammer && j.oppJammer !== '—') {
+      const key = j.oppJammer.toLowerCase();
+      if (!oppsMap.has(key)) oppsMap.set(key, j.oppJammer);
+    }
+  }
+  const uniqueOpps = [...oppsMap.entries()]; // [[key, displayName], …]
+  const showPills  = uniqueOpps.length >= 2;
+
+  // Filter jam list
+  const jams = filterOpp
+    ? allStats.jammedJams.filter(j => (j.oppJammer || '').toLowerCase() === filterOpp.toLowerCase())
+    : allStats.jammedJams;
+
+  // Recompute aggregate stats from the (possibly filtered) jam list
+  const total    = jams.length;
+  const ptsFor   = jams.reduce((s, j) => s + j.myPts, 0);
+  const ptsAgst  = jams.reduce((s, j) => s + j.theirPts, 0);
+  const avgPts   = total > 0 ? ptsFor / total : 0;
+  const leadCnt  = jams.filter(j => j.hadLead).length;
+  const leadPct  = total > 0 ? Math.round((leadCnt / total) * 100) : 0;
+  const net      = ptsFor - ptsAgst;
+
+  // Title & subtitle (medals always reflect game-wide ranking)
   const numDisplay  = number ? `#${number}` : '';
   const titleSuffix = numDisplay ? `${numDisplay} — ${name}` : name;
-  txt('skater-stats-title',    titleSuffix || 'Jammer Stats');
+  txt('skater-stats-title', titleSuffix || 'Jammer Stats');
 
   const medals   = ['🥇','🥈','🥉'];
   const rankings = getJammerRankings(name, teamNum);
@@ -5466,88 +5505,72 @@ function renderSkaterStatsPopup(name, number, teamName, teamNum) {
   if (rankings.gameRank) subParts.push(`${medals[rankings.gameRank - 1]} game`);
   txt('skater-stats-subtitle', subParts.join(' · '));
 
-  const body = el('skater-stats-body');
-  if (!body) return;
+  const bodyEl = el('skater-stats-body');
+  if (!bodyEl) return;
 
-  const avgDisplay     = stats.total > 0 ? stats.avgPts.toFixed(1) : '—';
-  const leadPctDisplay = stats.total > 0 ? `${stats.leadPct}%` : '—';
-  const net            = stats.ptsFor - stats.ptsAgainst;
-  const netDisplay     = stats.total > 0 ? (net >= 0 ? `+${net}` : String(net)) : '—';
-  const netColor       = net > 0 ? 'var(--lead-c)' : net < 0 ? 'var(--lost-c)' : 'var(--score)';
+  const avgDisplay = total > 0 ? avgPts.toFixed(1) : '—';
+  const ldPctDisp  = total > 0 ? `${leadPct}%`     : '—';
+  const netDisplay = total > 0 ? (net >= 0 ? `+${net}` : String(net)) : '—';
+  const netColor   = net > 0 ? 'var(--lead-c)' : net < 0 ? 'var(--lost-c)' : 'var(--score)';
 
   let html = `<div class="skater-stat-grid">
-    <div class="skater-stat-card">
-      <div class="skater-stat-val">${stats.total}</div>
-      <div class="skater-stat-lbl">Jams</div>
-    </div>
-    <div class="skater-stat-card">
-      <div class="skater-stat-val" style="color:var(--lead-c)">${stats.ptsFor}</div>
-      <div class="skater-stat-lbl">Pts For</div>
-    </div>
-    <div class="skater-stat-card">
-      <div class="skater-stat-val" style="color:var(--lost-c)">${stats.ptsAgainst}</div>
-      <div class="skater-stat-lbl">Pts Against</div>
-    </div>
-    <div class="skater-stat-card">
-      <div class="skater-stat-val">${escHtml(avgDisplay)}</div>
-      <div class="skater-stat-lbl">Avg / Jam</div>
-    </div>
-    <div class="skater-stat-card">
-      <div class="skater-stat-val" style="color:var(--lead-c)">${escHtml(leadPctDisplay)}</div>
-      <div class="skater-stat-lbl">Lead %</div>
-    </div>
-    <div class="skater-stat-card">
-      <div class="skater-stat-val" style="color:${netColor}">${escHtml(netDisplay)}</div>
-      <div class="skater-stat-lbl">Net Diff</div>
-    </div>
+    <div class="skater-stat-card"><div class="skater-stat-val">${total}</div><div class="skater-stat-lbl">Jams</div></div>
+    <div class="skater-stat-card"><div class="skater-stat-val" style="color:var(--lead-c)">${ptsFor}</div><div class="skater-stat-lbl">Pts For</div></div>
+    <div class="skater-stat-card"><div class="skater-stat-val" style="color:var(--lost-c)">${ptsAgst}</div><div class="skater-stat-lbl">Pts Against</div></div>
+    <div class="skater-stat-card"><div class="skater-stat-val">${escHtml(avgDisplay)}</div><div class="skater-stat-lbl">Avg / Jam</div></div>
+    <div class="skater-stat-card"><div class="skater-stat-val" style="color:var(--lead-c)">${escHtml(ldPctDisp)}</div><div class="skater-stat-lbl">Lead %</div></div>
+    <div class="skater-stat-card"><div class="skater-stat-val" style="color:${netColor}">${escHtml(netDisplay)}</div><div class="skater-stat-lbl">Net Diff</div></div>
   </div>`;
 
-  if (!stats.jammedJams.length) {
-    html += `<div class="skater-jam-empty">No completed jams found for this skater yet.</div>`;
-  } else {
-    html += `<div class="skater-jams-section-title">Jam Log — newest first</div><div class="skater-jams-list">`;
-    let lastPeriod = null;
-    for (let i = 0; i < stats.jammedJams.length; i++) {
-      const j   = stats.jammedJams[i];
-      const period = Number(j.p) || 0;
+  // ── Opponent filter pills (only when 2+ unique opponents) ──
+  if (showPills) {
+    html += `<div class="skater-filter-pills">`;
+    html += `<span class="skater-filter-pill${!filterOpp ? ' sj-pill-active' : ''}" data-jammer-filter="all">All</span>`;
+    for (const [key, dname] of uniqueOpps) {
+      const active = filterOpp && filterOpp.toLowerCase() === key ? ' sj-pill-active' : '';
+      html += `<span class="skater-filter-pill${active}" data-jammer-filter="${escHtml(key)}">${escHtml(dname)}</span>`;
+    }
+    html += `</div>`;
+  }
 
-      // Period separator (shown when period changes, since list is newest-first)
+  // ── Jam log ──
+  const logLabel = filterOpp
+    ? `H2H vs ${escHtml(filterOpp)} — newest first`
+    : 'Jam Log — newest first';
+
+  if (!jams.length) {
+    html += `<div class="skater-jam-empty">No completed jams${filterOpp ? ` vs ${escHtml(filterOpp)}` : ''} found yet.</div>`;
+  } else {
+    html += `<div class="skater-jam-legend">pts scored / opp pts &nbsp;·&nbsp; (cumulative scored against that jammer / H2H diff)</div>`;
+    html += `<div class="skater-jams-section-title">${logLabel}</div><div class="skater-jams-list">`;
+    let lastPeriod = null;
+    for (let i = 0; i < jams.length; i++) {
+      const j      = jams[i];
+      const period = Number(j.p) || 0;
       if (period !== lastPeriod) {
         html += `<div class="skater-jam-period-sep">Period ${escHtml(String(period || '—'))}</div>`;
         lastPeriod = period;
       }
-
-      const hi  = i % 2 === 0 ? 'sj-hi' : '';
-
-      // Right-side badges: PJ, Lead, penalties, star pass, outcome
+      const hi = i % 2 === 0 ? 'sj-hi' : '';
       const pjBadge = j.myPjAdv
         ? `<span class="badge b-warn" style="font-size:9px;padding:2px 6px" title="My team had a power jam advantage">⚡ PJ</span>`
         : j.oppPjAdv
           ? `<span class="badge b-dim" style="font-size:9px;padding:2px 6px" title="Opponent had a power jam advantage">⚡ Opp</span>`
           : '';
-      const leadBadge = j.hadLead
-        ? `<span class="badge b-lead" style="font-size:9px;padding:2px 6px">Lead</span>`
-        : '';
-      const spBadge = j.mySp
-        ? `<span class="badge b-sp" style="font-size:9px;padding:2px 6px">SP</span>`
-        : '';
-      const penBadges = j.pens.length
+      const leadBadge  = j.hadLead ? `<span class="badge b-lead" style="font-size:9px;padding:2px 6px">Lead</span>` : '';
+      const spBadge    = j.mySp    ? `<span class="badge b-sp"   style="font-size:9px;padding:2px 6px">SP</span>`   : '';
+      const penBadges  = j.pens.length
         ? j.pens.map(p => `<span class="badge b-danger" style="font-size:9px;padding:2px 6px" title="${escHtml(penaltyTooltip(p))}">${escHtml(p)}</span>`).join('')
         : '';
       const outcomeBadge = `<span class="badge ${escHtml(j.oCls)}" style="font-size:9px;padding:2px 6px">${escHtml(j.oLbl)}</span>`;
-
-      // Opposing jammer name (blank gracefully if unknown)
       const oppName = j.oppJammer || '—';
-
-      // (oppGameTotal / h2hDiff) context string — hidden when no opponent data
       let oppCtxHtml = '';
       if (j.oppGameTotal !== null) {
-        const h2h = j.h2hDiff;
-        const h2hStr  = h2h === null ? '—' : (h2h >= 0 ? `+${h2h}` : String(h2h));
+        const h2h      = j.h2hDiff;
+        const h2hStr   = h2h === null ? '—' : (h2h >= 0 ? `+${h2h}` : String(h2h));
         const h2hColor = h2h > 0 ? 'var(--lead-c)' : h2h < 0 ? 'var(--lost-c)' : 'var(--txt2)';
         oppCtxHtml = `<span class="skater-jam-opp-ctx">(${j.oppGameTotal} / <span style="color:${h2hColor}">${escHtml(h2hStr)}</span>)</span>`;
       }
-
       html += `<div class="skater-jam-entry ${hi}">
         <span class="skater-jam-num">J${escHtml(String(j.jamN))}</span>
         <span class="jam-micro-div"></span>
@@ -5567,7 +5590,7 @@ function renderSkaterStatsPopup(name, number, teamName, teamNum) {
     html += `<div class="skater-stats-note">Current jam in progress is not included in these totals.</div>`;
   }
 
-  body.innerHTML = html;
+  bodyEl.innerHTML = html;
 }
 
 // Returns { teamRank, gameRank } (1-3) for a jammer's pts-scored ranking,
@@ -5631,6 +5654,7 @@ function openSkaterStatsPopupByName(name, teamNum) {
 
   const teamName = String(v(`Team(${t}).TeamName`) || v(`Team(${t}).FullName`) ||
                           v(`Team(${t}).Name`, `Team ${t}`) || `Team ${t}`).trim() || `Team ${t}`;
+  _statsPopupCtx = { name: cleanName, number, teamName, teamNum: t };
   renderSkaterStatsPopup(cleanName, number, teamName, t);
   openModal('modal-skater-stats');
 }
@@ -5648,6 +5672,7 @@ function openSkaterStatsPopup(teamNum) {
                            v(`Team(${t}).Name`, `Team ${t}`) || `Team ${t}`).trim() || `Team ${t}`;
 
   if (!name || name === '—') return; // No jammer currently fielded
+  _statsPopupCtx = { name, number, teamName, teamNum: t };
   renderSkaterStatsPopup(name, number, teamName, t);
   openModal('modal-skater-stats');
 }
@@ -5656,6 +5681,14 @@ document.addEventListener('click',e=>{const nga=e.target.closest('[data-new-game
   // Jammer stats popup — tap/click anywhere on the jammer row
   const jRow=e.target.closest('[data-jammer-team]');
   if(jRow){const t=jRow.getAttribute('data-jammer-team');if(t){openSkaterStatsPopup(Number(t));return;}}
+  // Opponent filter pills inside the jammer stats popup
+  const pill = e.target.closest('[data-jammer-filter]');
+  if (pill && _statsPopupCtx) {
+    const f = pill.getAttribute('data-jammer-filter');
+    const { name, number, teamName, teamNum } = _statsPopupCtx;
+    renderSkaterStatsPopup(name, number, teamName, teamNum, f === 'all' ? null : f);
+    return;
+  }
   // Clickable lead-jammer names in jam history panels
   const histLink=e.target.closest('[data-jammer-hist-name]');
   if(histLink){const n=histLink.getAttribute('data-jammer-hist-name');const t=histLink.getAttribute('data-jammer-hist-team');if(n&&t){openSkaterStatsPopupByName(n,Number(t));return;}}
