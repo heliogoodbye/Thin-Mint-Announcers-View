@@ -6,6 +6,30 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.3.7] - 2026-08-20
+
+### Added
+- Jammer history export from the Jammer Stats popup: save a single jammer's full history to TXT, including their jammer-vs-jammer matchup breakdowns. Honors the active drill-down — with an opponent filter pill selected, the export narrows to just that head-to-head.
+- "Export Jammers" in the Jam History popup: export every jammer in the game at once, grouped by team and ranked by points, each with per-opponent head-to-head totals.
+- "Export Jam History" button in the New Game Detected dialog — a last chance to save the current game before a reset clears it. Runs without dismissing the dialog, so you still choose keep / clear / ignore afterward.
+
+### Fixed
+- Screen-too-small cutoff lowered so the app runs on iPad Mini in landscape (notably in Edge, where browser toolbars eat vertical space and pushed usable height under the old limit). Phones are still correctly excluded by the width gate.
+
+---
+
+## [1.3.6] - 2026-07-12
+
+### Added
+- Opponent filter pills in the Jammer Stats popup: drill a jammer's history down to a specific opponent jammer (head-to-head). Pills appear once a jammer has faced two or more opponents; selecting one filters the jam log and recomputes the summary cards (jams, pts for, pts against, avg/jam, lead %, net diff) for just that matchup. Medal rankings continue to reflect the whole game.
+- Jam log legend explaining the row notation: pts scored / opp pts · (cumulative scored against that jammer / H2H diff).
+
+### Changed
+- Remote mode now auto-detects: opening the file directly (file:// protocol) defaults to remote mode unless `?mode=local` is set. Previously remote mode required `?mode=remote` explicitly.
+- Connect screen subtitle clarifies the requirement — "Connect to a CRG Scoreboard (2025+)".
+
+---
+
 ## [1.3.5] - 2026-05-07
 
 ### Added
