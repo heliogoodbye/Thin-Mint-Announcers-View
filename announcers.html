@@ -2121,7 +2121,7 @@ body.view-tablet #inside-track-text,
 body.view-compact-tablet #inside-track-text{font-size:12px;}
 
 /* No phone layout. Portrait still shows rotate first; landscape phones hit the too-small warning. */
-@media (max-width:959px), (max-height:619px){
+@media (max-width:959px), (max-height:499px){
   body:not(.view-compact-tablet) #too-small-warning{display:flex;}
   body:not(.view-compact-tablet) #app,
   body:not(.view-compact-tablet) #cfg,
@@ -2226,7 +2226,7 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
         <div>Announcer's View</div>
       </div>
     </div>
-    <p class="cfg-sub">Connect to a CRG Scoreboard</p>
+    <p class="cfg-sub">Connect to a CRG Scoreboard (2025+)</p>
     <div class="cfg-field">
       <label for="cfg-host">Host</label>
       <input id="cfg-host" type="text" placeholder="192.168.1.x" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')cfgConnect()">
@@ -2239,7 +2239,7 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
     <div class="cfg-err" id="cfg-err" role="status" aria-live="polite"></div>
     <div class="cfg-footer">
       <span>Another ✨Thin Mintovation✨</span>
-      <span>v1.3.5</span>
+      <span>v1.3.7</span>
     </div>
   </div>
 </div>
@@ -2513,7 +2513,7 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
 <!-- ── FOOTER ── -->
 <div class="tmav-footer">
   <div class="tmav-footer-left">
-    🟤 Thin Mint Announcer's View | v1.3.5
+    🟤 Thin Mint Announcer's View | v1.3.7
   </div>
   <div class="tmav-footer-right">
     <span class="tmav-footer-action"><span class="tmav-keycap">A</span> About</span><span class="tmav-footer-sep">|</span>
@@ -2544,7 +2544,8 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
         <div class="hotkey-meta">Clears jam history, period/game summary memory, timeout rows, Inside Track history, scoring run memory, alert memory, and the local cache for this view.</div>
         <div class="tmav-new-game-fingerprint" id="new-game-fingerprint">Waiting for CRG state…</div>
         <div class="tmav-new-game-actions">
-          <button class="tmav-new-game-btn danger" type="button" data-new-game-action="clear">Clear & Reset Histories</button>
+          <button class="tmav-new-game-btn" type="button" id="new-game-export-btn">Export Jam History</button>
+          <button class="tmav-new-game-btn danger" type="button" data-new-game-action="clear">Clear &amp; Reset Histories</button>
           <button class="tmav-new-game-btn primary" type="button" data-new-game-action="keep">Keep Current History</button>
           <button class="tmav-new-game-btn" type="button" data-new-game-action="ignore">Ignore Until Refresh</button>
         </div>
@@ -2562,7 +2563,7 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
     <div class="hotkey-card-header">
       <div>
         <div class="hotkey-title" id="crg-version-warning-title">⚠️ Unsupported CRG Version</div>
-        <div class="hotkey-subtitle">Thin Mint Announcer’s View v1.3.5 requires CRG ScoreBoard 2025 or newer. Earlier releases do not provide the WebSocket data this view expects.</div>
+        <div class="hotkey-subtitle">Thin Mint Announcer’s View v1.3.7 requires CRG ScoreBoard 2025 or newer. Earlier releases do not provide the WebSocket data this view expects.</div>
       </div>
       <button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button>
     </div>
@@ -2596,8 +2597,8 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
     <div class="legend-item"><span class="legend-emoji">🧊</span><span class="legend-label">Trivia / filler</span></div>
   </div>
 </div>
-<div class="hotkey-footerline about-footerline"><div class="about-dedication">Made with ❤️ and 🛼 in Music City, U.S.A. | For Michi-chan, Muffin Tumble, DJ TJ, Ramona D Flowers, <em>and you</em>—GO TEAM ANNOUNCERS!</div><div class="about-footer-bottom"><span class="about-license">Licensed under <a class="hotkey-link" href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank" rel="noopener">GNU GPL v3.0</a></span><span id="tmav-credit-version">Another ✨Thinmintovation✨ | v1.3.5</span></div></div></div></div></div>
-<div class="hotkey-modal" id="modal-history" aria-hidden="true"><div class="hotkey-card" role="dialog" aria-modal="true" aria-labelledby="history-title"><div class="hotkey-card-header"><div><div class="hotkey-title" id="history-title">Jam History</div><div class="hotkey-subtitle" id="history-subtitle">Full game history</div></div><div class="history-header-actions"><button class="history-export-btn" type="button" id="export-history-btn">Export TXT</button><button class="history-clear-btn" type="button" id="clear-history-btn">Clear History</button><button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button></div></div><div class="hotkey-body"><div class="jam-popup-list" id="history-popup-list"></div></div></div></div>
+<div class="hotkey-footerline about-footerline"><div class="about-dedication">Made with ❤️ and 🛼 in Music City, U.S.A. | For Michi-chan, Muffin Tumble, DJ TJ, Ramona D Flowers, <em>and you</em>—GO TEAM ANNOUNCERS!</div><div class="about-footer-bottom"><span class="about-license">Licensed under <a class="hotkey-link" href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank" rel="noopener">GNU GPL v3.0</a></span><span id="tmav-credit-version">Another ✨Thinmintovation✨ | v1.3.7</span></div></div></div></div></div>
+<div class="hotkey-modal" id="modal-history" aria-hidden="true"><div class="hotkey-card" role="dialog" aria-modal="true" aria-labelledby="history-title"><div class="hotkey-card-header"><div><div class="hotkey-title" id="history-title">Jam History</div><div class="hotkey-subtitle" id="history-subtitle">Full game history</div></div><div class="history-header-actions"><button class="history-export-btn" type="button" id="export-history-btn">Export TXT</button><button class="history-export-btn" type="button" id="export-jammers-btn">Export Jammers</button><button class="history-clear-btn" type="button" id="clear-history-btn">Clear History</button><button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button></div></div><div class="hotkey-body"><div class="jam-popup-list" id="history-popup-list"></div></div></div></div>
 <div class="hotkey-modal" id="modal-penalties" aria-hidden="true"><div class="hotkey-card" role="dialog" aria-modal="true" aria-labelledby="penalty-title"><div class="hotkey-card-header"><div><div class="hotkey-title" id="penalty-title">Penalty Codes</div><div class="hotkey-subtitle">Quick announcer reference. Ruleset is auto-detected from the active CRG game.</div></div><button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button></div><div class="hotkey-body"><div class="penalty-tabs" id="penalty-tabs"></div><p class="penalty-note" id="penalty-note"></p><div class="penalty-list" id="penalty-list"></div></div></div></div>
 
 
@@ -2613,7 +2614,10 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
         <div class="hotkey-title" id="skater-stats-title">Jammer Stats</div>
         <div class="hotkey-subtitle" id="skater-stats-subtitle">Game stats for this jammer</div>
       </div>
-      <button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button>
+      <div class="history-header-actions">
+        <button class="history-export-btn" type="button" id="export-jammer-btn">Export TXT</button>
+        <button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button>
+      </div>
     </div>
     <div class="hotkey-body" id="skater-stats-body">
       <div class="skater-jam-empty">Loading…</div>
@@ -5201,7 +5205,7 @@ function connect(host, port) {
 // ─────────────────────────────────────────────
 // 🧩 Modals, hotkeys, penalty-code reference, and export tools
 // ─────────────────────────────────────────────
-const TMAV_VERSION='v1.3.5';
+const TMAV_VERSION='v1.3.7';
 const TMAV_BASE_CODES=[['A','High Block'],['B','Back Block'],['L','Low Block'],['H','Head Block'],['F','Forearm'],['E','Leg Block'],['C','Illegal Contact'],['D','Direction'],['M','Multiplayer'],['P','Illegal Position'],['X','Cut / Illegal Re-Entry'],['N','Interference'],['I','Illegal Procedure'],['G','Misconduct / Gross Misconduct']];
 const TMAV_RDCL_CODES=[['AS','Above the Shoulders'],['A','Arms'],['B','Back Blocking'],['L','Low Blocking'],['S','Stopping'],['DB','Directional Blocking'],['MB','Multi-Player Blocking'],['BB','Blocking Out of Bounds'],['AB','Assisting Out of Bounds'],['FR','Failure to Reform'],['OP','Skating Out of Play'],['BP','Blocking Out of Play'],['AP','Assisting Out of Play'],['SB','Skating Out of Bounds'],['CT','Cutting the Track'],['IB','Illegal Blocks'],['IP','Illegal Procedures'],['DG','Delay of Game'],['MS','Misconduct'],['GM','Gross Misconduct'],['F','Fighting']];
 const PENALTY_RULESETS={WFTDA:{note:'WFTDA-family flat-track codes. Current WFTDA cues group Cut and Illegal Re-Entry under X for Gaining Position.',codes:TMAV_BASE_CODES},MRDA:{note:'MRDA uses the WFTDA Rules of Flat Track Roller Derby framework, so this list mirrors the WFTDA-family flat-track codes.',codes:TMAV_BASE_CODES},JRDA:{note:'JRDA follows the WFTDA-licensed flat-track rules with youth-specific addenda, so this list mirrors the WFTDA-family flat-track codes.',codes:TMAV_BASE_CODES},RDCL:{note:'RDCL banked-track codes from the 2019 RDCL V3.2 officials hand-signal/rules materials. Confirm against the event packet if an event uses house modifications.',codes:TMAV_RDCL_CODES}};
@@ -5356,6 +5360,214 @@ function exportJamHistoryTxt(){
   downloadTxtFile(`tmav-jam-history-${stamp}.txt`, buildJamHistoryTxt());
 }
 
+/* ── v1.3.7 Jammer history txt export ── */
+// Resolves a team's display name the same way the stats popup does, so the
+// exported files read with the real team names rather than "Team 1/2".
+function teamNameForExport(t){
+  return String(v(`Team(${t}).TeamName`) || v(`Team(${t}).FullName`) ||
+                v(`Team(${t}).Name`, `Team ${t}`) || `Team ${t}`).trim() || `Team ${t}`;
+}
+
+// Finds a jammer's roster number from the live skater tree by name. Used when
+// exporting from jam history, where we only have the name on hand.
+function lookupRosterNumber(name, teamNum){
+  const t = Number(teamNum);
+  const cleanName = String(name || '').replace(/⚠️/g,'').trim().toLowerCase();
+  if (!cleanName) return '';
+  const pfx = `${CG}Team(${t}).Skater(`;
+  for (const k of Object.keys(S)){
+    if (!k.startsWith(pfx)) continue;
+    const m = k.match(/Team\(\d+\)\.Skater\(([^)]+)\)\.(Name|SkaterName)$/i);
+    if (!m) continue;
+    if (String(S[k] || '').replace(/⚠️/g,'').trim().toLowerCase() === cleanName){
+      const id = m[1];
+      return String(
+        S[`${CG}Team(${t}).Skater(${id}).RosterNumber`] ||
+        S[`${CG}Team(${t}).Skater(${id}).Number`] || ''
+      ).replace('#','').trim();
+    }
+  }
+  return '';
+}
+
+// Every unique jammer that appears in jam history, tagged with their team.
+function allJammersFromHistory(){
+  const seen = new Set();
+  const out = [];
+  for (const j of (Array.isArray(jamHistory) ? jamHistory : [])){
+    if (!j || j.type === 'timeout') continue;
+    for (const t of [1,2]){
+      const raw = t === 1 ? j.t1JammerName : j.t2JammerName;
+      const nm  = String(raw || '').replace(/⚠️/g,'').trim();
+      if (!nm || nm === '—') continue;
+      const key = t + '|' + nm.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push({ name: nm, teamNum: t });
+    }
+  }
+  return out;
+}
+
+// Collapses a jammer's jam list into per-opponent (jammer-vs-jammer) totals,
+// ordered by first time they faced that opponent.
+function jammerHeadToHead(jams){
+  const map = new Map();
+  for (let i = jams.length - 1; i >= 0; i--){ // reverse → oldest first for stable order
+    const jj = jams[i];
+    const nm = String(jj.oppJammer || '').trim();
+    if (!nm || nm === '—') continue;
+    const key = nm.toLowerCase();
+    if (!map.has(key)) map.set(key, { name: nm, jams: 0, ptsFor: 0, ptsAgainst: 0 });
+    const e = map.get(key);
+    e.jams++;
+    e.ptsFor += jj.myPts;
+    e.ptsAgainst += jj.theirPts;
+  }
+  return [...map.values()];
+}
+
+// One jam line for the text log, mirroring what the popup shows on screen.
+function plainJammerJamLine(jj){
+  const opp = jj.oppJammer && jj.oppJammer !== '—' ? jj.oppJammer : '—';
+  const flags = [];
+  if (jj.hadLead) flags.push('Lead');
+  if (jj.mySp)    flags.push('Star pass');
+  if (jj.myPjAdv) flags.push('Power jam adv');
+  else if (jj.oppPjAdv) flags.push('vs power jam');
+  if (Array.isArray(jj.pens) && jj.pens.length) flags.push(`Pen ${jj.pens.join('/')}`);
+  flags.push(String(jj.oLbl || 'Time').replace('⏱️','').trim() || 'Time');
+  let ctx = '';
+  if (jj.oppGameTotal !== null && jj.oppGameTotal !== undefined){
+    const d  = jj.h2hDiff;
+    const ds = d === null ? '—' : (d >= 0 ? `+${d}` : String(d));
+    ctx = `  (cum ${jj.oppGameTotal} / H2H ${ds})`;
+  }
+  return `J${jj.jamN}  +${jj.myPts} vs +${jj.theirPts}  vs ${opp}  [${flags.join(' · ')}]${ctx}`;
+}
+
+// The full text block for a single jammer. When filterOpp is set (a drilled-down
+// jammer-vs-jammer view), the whole block narrows to just that matchup.
+function buildJammerBlockTxt(name, number, teamName, teamNum, filterOpp){
+  const stats  = buildSkaterStats(name, number, teamNum);
+  const jams   = filterOpp
+    ? stats.jammedJams.filter(j => (j.oppJammer || '').toLowerCase() === filterOpp.toLowerCase())
+    : stats.jammedJams;
+
+  const total      = jams.length;
+  const ptsFor     = jams.reduce((s,j) => s + j.myPts, 0);
+  const ptsAgainst = jams.reduce((s,j) => s + j.theirPts, 0);
+  const avg        = total ? (ptsFor / total).toFixed(1) : '—';
+  const leadPct    = total ? Math.round(jams.filter(j => j.hadLead).length / total * 100) + '%' : '—';
+  const net        = ptsFor - ptsAgainst;
+  const netStr     = total ? (net >= 0 ? `+${net}` : String(net)) : '—';
+
+  const numDisp = number ? `#${number} ` : '';
+  const out = [];
+  out.push(`${numDisp}${name} — T${teamNum} ${teamName}`.trim());
+  if (filterOpp) out.push(`Head-to-head filter: vs ${filterOpp}`);
+  out.push(`Totals: ${total} jams · ${ptsFor} for / ${ptsAgainst} against · ${avg} avg · ${leadPct} lead · net ${netStr}`);
+
+  // Rankings reflect the whole game, so they ignore any opponent filter.
+  const r   = getJammerRankings(name, teamNum);
+  const ord = n => n === 1 ? '1st' : n === 2 ? '2nd' : n === 3 ? '3rd' : `${n}th`;
+  const rk  = [];
+  if (r.teamRank) rk.push(`${ord(r.teamRank)} on team`);
+  if (r.gameRank) rk.push(`${ord(r.gameRank)} in game`);
+  if (rk.length) out.push(`Scoring rank: ${rk.join(' · ')}`);
+
+  out.push('');
+  if (!total){
+    out.push(`No completed jams${filterOpp ? ` vs ${filterOpp}` : ''} yet.`);
+    return out.join('\n');
+  }
+
+  out.push('Jam Log (oldest first):');
+  const ordered = jams.slice().reverse(); // jammedJams is newest-first
+  let lastPeriod = null;
+  for (const jj of ordered){
+    const period = Number(jj.p) || 0;
+    if (period !== lastPeriod){ out.push(`Period ${period || '—'}`); lastPeriod = period; }
+    out.push('  ' + plainJammerJamLine(jj));
+  }
+
+  const h2h = jammerHeadToHead(jams);
+  if (h2h.length){
+    out.push('');
+    out.push('Head-to-Head totals:');
+    for (const e of h2h){
+      const n  = e.ptsFor - e.ptsAgainst;
+      const ns = n >= 0 ? `+${n}` : String(n);
+      out.push(`  vs ${e.name} — ${e.jams} jams · ${e.ptsFor} for / ${e.ptsAgainst} against · net ${ns}`);
+    }
+  }
+  return out.join('\n');
+}
+
+// Every jammer in the game, one block each, grouped by team and ranked by points.
+function buildAllJammersHistoryTxt(){
+  const jammers = allJammersFromHistory();
+  const t1 = teamNameForExport(1), t2 = teamNameForExport(2);
+  const exportedAt = new Date().toLocaleString();
+  const out = [];
+  out.push("Thin Mint Announcer's View — Jammer History Export");
+  out.push(`Exported: ${exportedAt}`);
+  out.push('Team Key:');
+  out.push(`T1: ${t1}`);
+  out.push(`T2: ${t2}`);
+  out.push(`Jammers: ${jammers.length}`);
+  out.push('');
+  if (!jammers.length){
+    out.push('No jammers recorded yet.');
+    return out.join('\n') + '\n';
+  }
+
+  const totals = jammerPointTotalsFromHistory();
+  jammers.sort((a,b) => {
+    if (a.teamNum !== b.teamNum) return a.teamNum - b.teamNum;
+    const pa = totals[a.name.trim()] || 0, pb = totals[b.name.trim()] || 0;
+    if (pb !== pa) return pb - pa;
+    return a.name.localeCompare(b.name);
+  });
+
+  const SEP = '═'.repeat(40);
+  jammers.forEach((jm, i) => {
+    if (i > 0) out.push('');
+    out.push(SEP);
+    const number   = lookupRosterNumber(jm.name, jm.teamNum);
+    const teamName = jm.teamNum === 1 ? t1 : t2;
+    out.push(buildJammerBlockTxt(jm.name, number, teamName, jm.teamNum, null));
+  });
+  return out.join('\n').replace(/\n{4,}/g, '\n\n\n').trim() + '\n';
+}
+
+// From the Jam History popup: dump every jammer at once.
+function exportAllJammersHistoryTxt(){
+  const now = new Date();
+  const stamp = now.toISOString().slice(0,19).replace(/[:T]/g,'-');
+  downloadTxtFile(`tmav-jammer-history-${stamp}.txt`, buildAllJammersHistoryTxt());
+}
+
+// From the Jammer Stats popup: export the open jammer, honoring the current
+// opponent drill-down if one is active.
+function exportJammerHistoryTxt(){
+  if (!_statsPopupCtx) return;
+  const { name, number, teamName, teamNum, filterOpp } = _statsPopupCtx;
+  const now = new Date();
+  const stamp = now.toISOString().slice(0,19).replace(/[:T]/g,'-');
+  const out = [];
+  out.push("Thin Mint Announcer's View — Jammer History Export");
+  out.push(`Exported: ${now.toLocaleString()}`);
+  out.push('');
+  out.push(buildJammerBlockTxt(name, number, teamName, teamNum, filterOpp || null));
+  const text = out.join('\n').replace(/\n{4,}/g, '\n\n\n').trim() + '\n';
+
+  const slug = s => String(s || '').replace(/[^\w\-]+/g,'-').replace(/^-+|-+$/g,'').toLowerCase();
+  const safe = slug(name) || 'jammer';
+  const oppPart = filterOpp ? '-vs-' + (slug(filterOpp) || 'opp') : '';
+  downloadTxtFile(`tmav-jammer-${safe}${oppPart}-${stamp}.txt`, text);
+}
+
 function clearHistoryFromPopup(){
   const ok = confirm('Clear jam history?\n\nThis cannot be undone.');
   if (!ok) return;
@@ -5465,6 +5677,10 @@ let _statsPopupCtx = null;
 
 function renderSkaterStatsPopup(name, number, teamName, teamNum, filterOpp) {
   filterOpp = filterOpp || null;
+
+  // Keep the popup context in sync with the visible drill-down so an export
+  // from here matches exactly what's on screen (all opponents, or one matchup).
+  if (_statsPopupCtx) _statsPopupCtx.filterOpp = filterOpp;
 
   const allStats = buildSkaterStats(name, number, teamNum);
 
@@ -5635,26 +5851,9 @@ function openSkaterStatsPopupByName(name, teamNum) {
   const cleanName = String(name || '').replace(/⚠️/g,'').trim();
   if (!cleanName || cleanName === '—') return;
 
-  // Look up roster number from the live S state skater tree
-  const pfx = `${CG}Team(${t}).Skater(`;
-  let number = '';
-  outer: for (const k of Object.keys(S)) {
-    if (!k.startsWith(pfx)) continue;
-    const m = k.match(/Team\(\d+\)\.Skater\(([^)]+)\)\.(Name|SkaterName)$/i);
-    if (!m) continue;
-    if (String(S[k] || '').replace(/⚠️/g,'').trim().toLowerCase() === cleanName.toLowerCase()) {
-      const id = m[1];
-      number = String(
-        S[`${CG}Team(${t}).Skater(${id}).RosterNumber`] ||
-        S[`${CG}Team(${t}).Skater(${id}).Number`] || ''
-      ).replace('#','').trim();
-      break outer;
-    }
-  }
-
-  const teamName = String(v(`Team(${t}).TeamName`) || v(`Team(${t}).FullName`) ||
-                          v(`Team(${t}).Name`, `Team ${t}`) || `Team ${t}`).trim() || `Team ${t}`;
-  _statsPopupCtx = { name: cleanName, number, teamName, teamNum: t };
+  const number   = lookupRosterNumber(cleanName, t);
+  const teamName = teamNameForExport(t);
+  _statsPopupCtx = { name: cleanName, number, teamName, teamNum: t, filterOpp: null };
   renderSkaterStatsPopup(cleanName, number, teamName, t);
   openModal('modal-skater-stats');
 }
@@ -5672,12 +5871,12 @@ function openSkaterStatsPopup(teamNum) {
                            v(`Team(${t}).Name`, `Team ${t}`) || `Team ${t}`).trim() || `Team ${t}`;
 
   if (!name || name === '—') return; // No jammer currently fielded
-  _statsPopupCtx = { name, number, teamName, teamNum: t };
+  _statsPopupCtx = { name, number, teamName, teamNum: t, filterOpp: null };
   renderSkaterStatsPopup(name, number, teamName, t);
   openModal('modal-skater-stats');
 }
 
-document.addEventListener('click',e=>{const nga=e.target.closest('[data-new-game-action]');if(nga){handleNewGamePromptAction(nga.getAttribute('data-new-game-action')||'keep');return;}const dbgClear=e.target.closest('#debug-clear-btn');if(dbgClear){clearWsDebugLog();return;}const dbgCopy=e.target.closest('#debug-copy-btn');if(dbgCopy){copyWsDebugLog();return;}const exportHistoryBtn=e.target.closest('#export-history-btn');if(exportHistoryBtn){exportJamHistoryTxt();return;}const clearBtn=e.target.closest('#clear-history-btn');if(clearBtn){clearHistoryFromPopup();return;}const closeBtn=e.target.closest('[data-close-modal]');if(closeBtn)closeModals();if(e.target.classList&&e.target.classList.contains('hotkey-modal'))closeModals();
+document.addEventListener('click',e=>{const nga=e.target.closest('[data-new-game-action]');if(nga){handleNewGamePromptAction(nga.getAttribute('data-new-game-action')||'keep');return;}const newGameExportBtn=e.target.closest('#new-game-export-btn');if(newGameExportBtn){exportJamHistoryTxt();return;}const dbgClear=e.target.closest('#debug-clear-btn');if(dbgClear){clearWsDebugLog();return;}const dbgCopy=e.target.closest('#debug-copy-btn');if(dbgCopy){copyWsDebugLog();return;}const exportHistoryBtn=e.target.closest('#export-history-btn');if(exportHistoryBtn){exportJamHistoryTxt();return;}const exportJammersBtn=e.target.closest('#export-jammers-btn');if(exportJammersBtn){exportAllJammersHistoryTxt();return;}const exportJammerBtn=e.target.closest('#export-jammer-btn');if(exportJammerBtn){exportJammerHistoryTxt();return;}const clearBtn=e.target.closest('#clear-history-btn');if(clearBtn){clearHistoryFromPopup();return;}const closeBtn=e.target.closest('[data-close-modal]');if(closeBtn)closeModals();if(e.target.classList&&e.target.classList.contains('hotkey-modal'))closeModals();
   // Jammer stats popup — tap/click anywhere on the jammer row
   const jRow=e.target.closest('[data-jammer-team]');
   if(jRow){const t=jRow.getAttribute('data-jammer-team');if(t){openSkaterStatsPopup(Number(t));return;}}
@@ -5777,7 +5976,11 @@ let isRemote = false;
   loadJamHistory();
 
   const params = new URLSearchParams(window.location.search);
-  isRemote = params.get('mode') === 'remote';
+  const requestedMode = params.get('mode');
+
+  isRemote =
+    requestedMode === 'remote' ||
+    (requestedMode !== 'local' && window.location.protocol === 'file:');
 
   const themeParam = params.get('theme');
   if (themeParam === 'light') applyTheme(false);
@@ -7743,7 +7946,7 @@ setInterval(() => {
 /* ── v1.3.3 tablet test patch: iPad Mini minimum, no phone view, touch dock ── */
 (function(){
   const MIN_TABLET_W = 960;
-  const MIN_TABLET_H = 620;
+  const MIN_TABLET_H = 500;
   const VIEW_CLASSES = [
     "view-desktop","view-tablet","view-compact","view-compact-phone",
     "view-compact-tablet","view-too-small"
