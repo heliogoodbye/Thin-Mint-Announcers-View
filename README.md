@@ -58,42 +58,6 @@
 
 ---
 
-## Installation
-
-Place the **announcers.html** file in your CRG directory:
-
-```
-/html/custom/view/announcers.html
-```
-
----
-
-## Usage
-
-Open in a browser:
-
-```
-http://[CRG-IP-ADDRESS]:8000/custom/view/announcers.html
-```
-
----
-
-## Remote Mode
-
-You can run the view without installing it on CRG:
-
-1. Open the HTML file in your browser  
-2. Append `?mode=remote` to the URL  
-   - Example:
-     ```
-     file:///Users/you/announcers.html?mode=remote
-     ```
-3. Reload the page  
-4. Enter the CRG IP address  
-5. Connect  
-
----
-
 ## Controls
 
 | Key | Action |
