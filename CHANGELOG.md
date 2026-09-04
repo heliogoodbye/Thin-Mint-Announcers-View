@@ -6,6 +6,64 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.4.1] — 2026-09-03
+
+
+### Added
+- **Penalty Detail Modal** — Tap Penalty Heat in the center panel to show a list
+  of skaters and their penalties, grouped and sorted by team.
+  
+### Penalty tracking — rebuilt on CRG as the authoritative source
+- Individual penalties now read directly from CRG `Team(*).Skater(*).Penalty(*)`,
+  keyed internally by CRG skater id + penalty id. Removed the old name/number
+  merging and multi-source defensive matching.
+- Code, Period, and Jam read straight from CRG, handling both the numeric fields
+  and CRG's element-reference path form.
+- `PenaltyCount` is the authoritative per-skater total and a cross-check: when CRG
+  reports more penalties than can be identified by code, the detail shows
+  "N penalties — details available for M" instead of inventing placeholder events.
+- Lineup foul-out (⚠️) warnings and Inside Track penalty counts now source from
+  CRG `Skater(id).PenaltyCount` via a roster-number → id lookup, replacing the
+  old broad scan.
+- Removed dead collection paths: speculative JS-array merge, DOM lineup name
+  inference, and placeholder padding.
+
+### WebSocket Inspector
+- Surfaces the distinct `Penalty(*)` property names CRG actually sends, each with
+  a sample value, for verifying field names during a test game.
+
+### Known limitation
+- The penalty property names (`Code`, `PeriodNumber`/`Period`, `JamNumber`/`Jam`)
+  are a best read of CRG's model, not yet verified against a live 2025/2026 feed.
+  Use the WebSocket Inspector's Penalty(*) panel to confirm and adjust if needed.
+
+## [1.4.0]
+
+### Added
+- **Officials list** — an officials roster read live from CRG (`O`, or the tablet
+  dock), grouped and sorted, with team tags for penalty-tracker positions.
+- **Team roster popup** — tap a team name to see its full roster, sorted by derby
+  number and showing pronouns where CRG has them.
+- **Jam history backfill** — reconstructs jams that were missed before connecting
+  (or dropped) from CRG's own game history, so connecting mid-game fills in the
+  earlier jams. Backfilled rows are tagged and carry a quiet cyan edge, since the
+  data is CRG-sourced but best-effort.
+- **Remote mode via CRG WSProxy** — `?mode=remote` connects through CRG's WSProxy
+  relay over `wss://`, with proxy hosts remembered separately from LAN hosts.
+- **Jam History export — game summary** — the `.txt` export now leads with a game
+  summary and closes each period with its own summary (score/differential,
+  penalties, lead jams, power jams, star passes, and average jam points).
+
+### Changed
+- CRG is now the authoritative source for **rosters and officials**, matching the
+  model the rest of the view follows.
+
+### Removed
+- **Inside Track — Official Review outcome guessing.** Dropped the machinery that
+  snapshotted score/penalty/clock state around an official review and inferred the
+  result as a talking point. The factual "Retained" marker (from CRG's own review
+  count) stays.
+
 ## [1.3.7] - 2026-08-20
 
 ### Added
