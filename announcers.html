@@ -905,6 +905,116 @@ body:not(.remote) #disc { display: none !important; }
   flex:1;
 }
 
+/* Retrieve Missing Data gets a cyan accent so it reads as a recovery action, not an export. */
+.history-retrieve-btn:hover{
+  color:var(--sp-c);
+  border-color:var(--sp-c);
+}
+.history-retrieve-btn.is-busy{
+  opacity:.6;
+  cursor:progress;
+}
+.history-retrieve-status{
+  border:1px solid var(--border);
+  background:var(--bg3);
+  color:var(--txt2);
+  border-radius:10px;
+  padding:8px 12px;
+  margin-bottom:10px;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.4;
+}
+.history-retrieve-status.is-good{
+  color:var(--lead-c);
+  border-color:var(--lead-b);
+  background:var(--lead-bg);
+}
+.history-retrieve-status.is-warn{
+  color:var(--warn-c);
+  border-color:var(--warn-b);
+  background:var(--warn-bg);
+}
+
+/* Backfilled rows carry a quiet cyan edge — the data is CRG-sourced but best-effort
+   (no call-off stopwatch, no power-jam badge), so we mark provenance honestly. */
+.jam-row.jam-reconstructed{
+  box-shadow:inset 3px 0 0 var(--sp-c);
+}
+.jam-recon-tag{
+  color:var(--sp-c);
+  font-size:9px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-left:6px;
+  opacity:.85;
+}
+
+/* ── Officials roster (O) ── */
+.officials-list{display:flex;flex-direction:column;gap:18px;}
+.officials-section-head{
+  display:flex;align-items:center;gap:10px;
+  color:var(--txt2);font-size:12px;font-weight:950;
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;
+}
+.officials-count{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:20px;height:20px;padding:0 6px;border-radius:999px;
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--txt2);font-size:11px;font-weight:900;letter-spacing:0;
+}
+.officials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;}
+.officials-item{
+  display:flex;gap:11px;align-items:flex-start;
+  border:1px solid var(--border);border-radius:12px;background:var(--bg3);padding:10px 12px;
+}
+.officials-abbr{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:44px;height:28px;padding:0 8px;flex-shrink:0;
+  border-radius:8px;background:var(--lead-bg);color:var(--lead-c);border:1px solid var(--lead-b);
+  font-weight:950;font-size:12px;letter-spacing:.03em;
+}
+.officials-body{min-width:0;}
+.officials-name{
+  font-size:14px;font-weight:850;color:var(--txt);line-height:1.2;
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+}
+.officials-role{color:var(--txt2);font-size:12px;margin-top:2px;line-height:1.25;}
+.officials-meta{color:var(--txt3);font-size:11px;margin-top:3px;line-height:1.3;}
+.officials-head{
+  font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--call-c);background:var(--call-bg);border:1px solid var(--call-b);
+  border-radius:6px;padding:2px 6px;
+}
+.officials-team{
+  font-size:9px;font-weight:900;letter-spacing:.03em;
+  border-radius:6px;padding:2px 6px;border:1px solid var(--border);color:var(--txt2);background:var(--bg2);
+}
+.officials-team-t1{color:var(--lead-c);border-color:var(--lead-b);}
+.officials-team-t2{color:var(--timeout-c);border-color:var(--timeout-b);}
+.officials-empty{border:1px solid var(--border);border-radius:12px;background:var(--bg3);padding:14px 16px;}
+.officials-empty strong{display:block;margin-bottom:4px;font-size:14px;}
+
+/* ── Team roster (click a team name) ── */
+.team-roster-link{cursor:pointer;}
+.team-roster-link:focus-visible{outline:none;}
+.team-roster-link:hover .team-name,.team-roster-link:focus-visible .team-name{color:var(--lead-c);}
+.roster-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;}
+.roster-item{
+  display:flex;gap:11px;align-items:center;
+  border:1px solid var(--border);border-radius:12px;background:var(--bg3);padding:9px 12px;
+}
+.roster-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:48px;height:30px;padding:0 8px;flex-shrink:0;
+  border-radius:8px;background:var(--bg2);border:1px solid var(--border);
+  color:var(--txt);font-weight:950;font-size:14px;font-variant-numeric:tabular-nums;letter-spacing:.02em;
+}
+.roster-body{min-width:0;}
+.roster-name{font-size:14px;font-weight:800;color:var(--txt);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.roster-pronouns{color:var(--txt2);font-size:11px;margin-top:2px;line-height:1.2;}
+
 
 
 /* ── Hidden WebSocket inspector overlay ── */
@@ -2203,7 +2313,7 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
   <div class="rotate-warning-inner">
     <div class="rotate-warning-icon">↻</div>
     <div class="rotate-warning-title">Rotate Screen</div>
-    <div class="rotate-warning-copy">This announcer's view is designed for landscape. Please turn your tablet sideways.</div>
+    <div class="rotate-warning-copy">Announcer's View is designed for landscape presentation. Please turn your tablet sideways.</div>
   </div>
 </div>
 
@@ -2226,12 +2336,12 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
         <div>Announcer's View</div>
       </div>
     </div>
-    <p class="cfg-sub">Connect to a CRG Scoreboard (2025+)</p>
+    <p class="cfg-sub" id="cfg-sub">Connect to a CRG Scoreboard (2025+)</p>
     <div class="cfg-field">
-      <label for="cfg-host">Host</label>
+      <label for="cfg-host" id="cfg-host-label">Host</label>
       <input id="cfg-host" type="text" placeholder="192.168.1.x" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')cfgConnect()">
     </div>
-    <div class="cfg-field">
+    <div class="cfg-field" id="cfg-port-field">
       <label for="cfg-port">Port</label>
       <input id="cfg-port" type="text" value="8000" autocomplete="off" onkeydown="if(event.key==='Enter')cfgConnect()">
     </div>
@@ -2239,7 +2349,7 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
     <div class="cfg-err" id="cfg-err" role="status" aria-live="polite"></div>
     <div class="cfg-footer">
       <span>Another ✨Thin Mintovation✨</span>
-      <span>v1.3.7</span>
+      <span>v1.4.0</span>
     </div>
   </div>
 </div>
@@ -2288,7 +2398,7 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
     <!-- TEAM 1 -->
     <div class="team-panel">
       <div class="team-header">
-        <div class="team-meta">
+        <div class="team-meta team-roster-link" data-team-roster="1" role="button" tabindex="0" aria-label="View Team 1 roster">
           <div class="lbl">Team 1</div>
           <div class="team-name" id="t1-name">—</div>
         </div>
@@ -2375,7 +2485,7 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
     <!-- TEAM 2 -->
     <div class="team-panel mirror">
       <div class="team-header">
-        <div class="team-meta">
+        <div class="team-meta team-roster-link" data-team-roster="2" role="button" tabindex="0" aria-label="View Team 2 roster">
           <div class="lbl">Team 2</div>
           <div class="team-name" id="t2-name">—</div>
         </div>
@@ -2513,12 +2623,13 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
 <!-- ── FOOTER ── -->
 <div class="tmav-footer">
   <div class="tmav-footer-left">
-    🟤 Thin Mint Announcer's View | v1.3.7
+    🟤 Thin Mint Announcer's View | v1.4.0
   </div>
   <div class="tmav-footer-right">
     <span class="tmav-footer-action"><span class="tmav-keycap">A</span> About</span><span class="tmav-footer-sep">|</span>
     <span class="tmav-footer-action"><span class="tmav-keycap">J</span> Jam History</span><span class="tmav-footer-sep">|</span>
     <span class="tmav-footer-action"><span class="tmav-keycap">P</span> Penalty Codes</span><span class="tmav-footer-sep">|</span>
+    <span class="tmav-footer-action"><span class="tmav-keycap">O</span> Officials</span><span class="tmav-footer-sep">|</span>
     <span class="tmav-footer-action"><span class="tmav-keycap">T</span> Inside Track</span><span class="tmav-footer-sep">|</span>
     <span class="tmav-footer-action"><span class="tmav-keycap">D</span> Dark/Light Mode</span>
   </div>
@@ -2563,7 +2674,7 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
     <div class="hotkey-card-header">
       <div>
         <div class="hotkey-title" id="crg-version-warning-title">⚠️ Unsupported CRG Version</div>
-        <div class="hotkey-subtitle">Thin Mint Announcer’s View v1.3.7 requires CRG ScoreBoard 2025 or newer. Earlier releases do not provide the WebSocket data this view expects.</div>
+        <div class="hotkey-subtitle">Thin Mint Announcer’s View v1.4.0 requires CRG ScoreBoard 2025 or newer. Earlier releases do not provide the WebSocket data this view expects.</div>
       </div>
       <button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button>
     </div>
@@ -2587,7 +2698,7 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
   </div>
 </div>
 
-<div class="hotkey-modal" id="modal-about" aria-hidden="true"><div class="hotkey-card" role="dialog" aria-modal="true" aria-labelledby="about-title"><div class="hotkey-card-header"><div><div class="hotkey-title" id="about-title">🟤 Thin Mint Announcer's View</div><div class="hotkey-subtitle">A compact, trackside CRG readout for announcers: clocks, score, lineups, jammer status, penalty heat, jam history, and the quick reference bits you need while the game is moving. Helps announcers to not just call the plays, but tell the story.</div></div><button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button></div><div class="hotkey-body"><div class="hotkey-grid"><div class="hotkey-mini-card"><span class="hotkey-kbd">A</span><strong>About</strong><div class="hotkey-meta">Shows this help and version screen.</div></div><div class="hotkey-mini-card"><span class="hotkey-kbd">J</span><strong>Jam History</strong><div class="hotkey-meta">Shows the full saved jam history for the game, separated by period.</div></div><div class="hotkey-mini-card"><span class="hotkey-kbd">P</span><strong>Penalty Codes</strong><div class="hotkey-meta">Shows the penalty code reference for the active CRG ruleset.</div></div><div class="hotkey-mini-card"><span class="hotkey-kbd">D</span><strong>Dark / Light</strong><div class="hotkey-meta">Toggles the announcer view between dark mode and light mode.</div></div><div class="hotkey-mini-card"><span class="hotkey-kbd">T</span><strong>Inside Track</strong><div class="hotkey-meta">Shows accumulated talking points for halftime and postgame recap.</div></div></div></div>
+<div class="hotkey-modal" id="modal-about" aria-hidden="true"><div class="hotkey-card" role="dialog" aria-modal="true" aria-labelledby="about-title"><div class="hotkey-card-header"><div><div class="hotkey-title" id="about-title">🟤 Thin Mint Announcer's View</div><div class="hotkey-subtitle">A compact, trackside CRG readout for announcers: clocks, score, lineups, jammer status, penalty heat, jam history, and the quick reference bits you need while the game is moving. Helps announcers to not just call the plays, but tell the story.</div></div><button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button></div><div class="hotkey-body"><div class="hotkey-grid"><div class="hotkey-mini-card"><span class="hotkey-kbd">A</span><strong>About</strong><div class="hotkey-meta">Shows this help and version screen.</div></div><div class="hotkey-mini-card"><span class="hotkey-kbd">J</span><strong>Jam History</strong><div class="hotkey-meta">Shows the full saved jam history for the game, separated by period.</div></div><div class="hotkey-mini-card"><span class="hotkey-kbd">P</span><strong>Penalty Codes</strong><div class="hotkey-meta">Shows the penalty code reference for the active CRG ruleset.</div></div><div class="hotkey-mini-card"><span class="hotkey-kbd">O</span><strong>Officials</strong><div class="hotkey-meta">Shows the referees and NSOs for the active game, with roles and crew info from CRG.</div></div><div class="hotkey-mini-card"><span class="hotkey-kbd">D</span><strong>Dark / Light</strong><div class="hotkey-meta">Toggles the announcer view between dark mode and light mode.</div></div><div class="hotkey-mini-card"><span class="hotkey-kbd">T</span><strong>Inside Track</strong><div class="hotkey-meta">Shows accumulated talking points for halftime and postgame recap.</div></div></div></div>
 <div class="hotkey-section">
   <div class="hotkey-section-title">Inside Track Legend</div>
   <div class="inside-track-legend">
@@ -2597,9 +2708,13 @@ body.light .skater-jam-entry.sj-hi{background:rgba(15,34,48,.045);}
     <div class="legend-item"><span class="legend-emoji">🧊</span><span class="legend-label">Trivia / filler</span></div>
   </div>
 </div>
-<div class="hotkey-footerline about-footerline"><div class="about-dedication">Made with ❤️ and 🛼 in Music City, U.S.A. | For Michi-chan, Muffin Tumble, DJ TJ, Ramona D Flowers, <em>and you</em>—GO TEAM ANNOUNCERS!</div><div class="about-footer-bottom"><span class="about-license">Licensed under <a class="hotkey-link" href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank" rel="noopener">GNU GPL v3.0</a></span><span id="tmav-credit-version">Another ✨Thinmintovation✨ | v1.3.7</span></div></div></div></div></div>
-<div class="hotkey-modal" id="modal-history" aria-hidden="true"><div class="hotkey-card" role="dialog" aria-modal="true" aria-labelledby="history-title"><div class="hotkey-card-header"><div><div class="hotkey-title" id="history-title">Jam History</div><div class="hotkey-subtitle" id="history-subtitle">Full game history</div></div><div class="history-header-actions"><button class="history-export-btn" type="button" id="export-history-btn">Export TXT</button><button class="history-export-btn" type="button" id="export-jammers-btn">Export Jammers</button><button class="history-clear-btn" type="button" id="clear-history-btn">Clear History</button><button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button></div></div><div class="hotkey-body"><div class="jam-popup-list" id="history-popup-list"></div></div></div></div>
+<div class="hotkey-footerline about-footerline"><div class="about-dedication">Made with ❤️ and 🛼 in Music City, U.S.A. | For Michi-chan, Muffin Tumble, DJ TJ, Ramona D Flowers, <em>and you</em>—GO TEAM ANNOUNCERS!</div><div class="about-footer-bottom"><span class="about-license">Licensed under <a class="hotkey-link" href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank" rel="noopener">GNU GPL v3.0</a></span><span id="tmav-credit-version">Another ✨Thinmintovation✨ | v1.4.0</span></div></div></div></div></div>
+<div class="hotkey-modal" id="modal-history" aria-hidden="true"><div class="hotkey-card" role="dialog" aria-modal="true" aria-labelledby="history-title"><div class="hotkey-card-header"><div><div class="hotkey-title" id="history-title">Jam History</div><div class="hotkey-subtitle" id="history-subtitle">Full game history</div></div><div class="history-header-actions"><button class="history-export-btn history-retrieve-btn" type="button" id="retrieve-missing-btn">Retrieve Missing Data</button><button class="history-export-btn" type="button" id="export-history-btn">Export TXT</button><button class="history-export-btn" type="button" id="export-jammers-btn">Export Jammers</button><button class="history-clear-btn" type="button" id="clear-history-btn">Clear History</button><button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button></div></div><div class="hotkey-body"><div class="history-retrieve-status" id="retrieve-status" role="status" aria-live="polite" hidden></div><div class="jam-popup-list" id="history-popup-list"></div></div></div></div>
 <div class="hotkey-modal" id="modal-penalties" aria-hidden="true"><div class="hotkey-card" role="dialog" aria-modal="true" aria-labelledby="penalty-title"><div class="hotkey-card-header"><div><div class="hotkey-title" id="penalty-title">Penalty Codes</div><div class="hotkey-subtitle">Quick announcer reference. Ruleset is auto-detected from the active CRG game.</div></div><button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button></div><div class="hotkey-body"><div class="penalty-tabs" id="penalty-tabs"></div><p class="penalty-note" id="penalty-note"></p><div class="penalty-list" id="penalty-list"></div></div></div></div>
+
+<div class="hotkey-modal" id="modal-officials" aria-hidden="true"><div class="hotkey-card" role="dialog" aria-modal="true" aria-labelledby="officials-title"><div class="hotkey-card-header"><div><div class="hotkey-title" id="officials-title">Officials</div><div class="hotkey-subtitle" id="officials-subtitle">Referees and non-skating officials for the active game.</div></div><button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button></div><div class="hotkey-body"><div class="officials-list" id="officials-list"></div></div></div></div>
+
+<div class="hotkey-modal" id="modal-team-roster" aria-hidden="true"><div class="hotkey-card" role="dialog" aria-modal="true" aria-labelledby="team-roster-title"><div class="hotkey-card-header"><div><div class="hotkey-title" id="team-roster-title">Team Roster</div><div class="hotkey-subtitle" id="team-roster-subtitle">Full roster for this team.</div></div><button class="hotkey-close" type="button" data-close-modal aria-label="Close">×</button></div><div class="hotkey-body"><div class="roster-list" id="team-roster-list"></div></div></div></div>
 
 
 
@@ -4080,6 +4195,38 @@ function jammerNameWithPointsHtml(name, teamNumber, number, position) {
   return `<span class="jammer-name-wrap">${pieces}</span>`;
 }
 
+// Resolve a skater's roster pronouns by team + name/number. Used by the jammer stats
+// popup (click a jammer). Prefers a roster-number match, then falls back to name.
+function skaterPronounsByNameNumber(t, name, number) {
+  const cleanName = String(name || '').replace(/⚠️/g, '').trim().toLowerCase();
+  const cleanNum = String(number || '').replace('#', '').trim();
+  const pfx = `${CG}Team(${t}).Skater(`;
+
+  if (cleanNum) {
+    for (const k of Object.keys(S)) {
+      if (!k.startsWith(pfx) || !k.endsWith('.RosterNumber')) continue;
+      if (String(S[k] || '').replace('#', '').trim() !== cleanNum) continue;
+      const m = k.match(/Skater\(([^)]+)\)\.RosterNumber$/);
+      if (m) {
+        const pr = String(S[`${CG}Team(${t}).Skater(${m[1]}).Pronouns`] || '').trim();
+        if (pr) return pr;
+      }
+    }
+  }
+  if (cleanName) {
+    for (const k of Object.keys(S)) {
+      if (!k.startsWith(pfx) || !k.endsWith('.Name')) continue;
+      if (String(S[k] || '').replace(/⚠️/g, '').trim().toLowerCase() !== cleanName) continue;
+      const m = k.match(/Skater\(([^)]+)\)\.Name$/);
+      if (m) {
+        const pr = String(S[`${CG}Team(${t}).Skater(${m[1]}).Pronouns`] || '').trim();
+        if (pr) return pr;
+      }
+    }
+  }
+  return '';
+}
+
 function joinJammerContextHtml(...parts) {
   return parts.filter(Boolean).join('<span style="display:inline-block;width:6px"></span>');
 }
@@ -4661,6 +4808,270 @@ function captureJam(jammerSnap = {}, jamEndSnap = {}) {
   if (hr) hr.scrollTop = 0;
 }
 
+// ─────────────────────────────────────────────
+// 🧩 Historical jam reconstruction (v1.4)
+// ─────────────────────────────────────────────
+// When you connect late or recover a lost session, CRG has already streamed its
+// full Period(*).Jam(*).TeamJam(*) tree into S — live capture just wasn't running
+// to catch those jams as they ended. Reconstruction rebuilds the missing rows from
+// that static state. It's additive and idempotent: only jams that ended before the
+// live jam and aren't already in history get added. A few fields can't be recovered
+// from a static snapshot (exact call-off elapsed, power-jam kills), so those stay
+// blank and the row is flagged as a backfill.
+
+function crgTeamJamGet(p, j, team, prop, fb = '') {
+  // CRG TeamJam ids come through as plain "1"/"2" or "Team_1"/"Team_2" depending on version.
+  for (const id of [String(team), `Team_${team}`]) {
+    const key = `${CG}Period(${p}).Jam(${j}).TeamJam(${id}).${prop}`;
+    if (Object.prototype.hasOwnProperty.call(S, key)) return S[key];
+  }
+  return fb;
+}
+
+function crgTeamJamBool(p, j, team, prop) {
+  return boolLike(crgTeamJamGet(p, j, team, prop, ''));
+}
+
+// Resolve a fielded skater's name for a past jam. Try the fielding's own name fields
+// first, then fall back to the skater reference it points at.
+function crgFieldingName(p, j, team, pos) {
+  for (const id of [String(team), `Team_${team}`]) {
+    const base = `${CG}Period(${p}).Jam(${j}).TeamJam(${id}).Fielding(${pos})`;
+    for (const prop of ['Name', 'SkaterName']) {
+      const val = S[`${base}.${prop}`];
+      if (val) return String(val).replace(/⚠️/g, '').trim();
+    }
+    const skId = S[`${base}.Skater`];
+    if (skId) {
+      const nm = S[`${CG}Team(${team}).Skater(${skId}).Name`];
+      if (nm) return String(nm).replace(/⚠️/g, '').trim();
+    }
+  }
+  return '';
+}
+
+function crgFieldingNumber(p, j, team, pos) {
+  for (const id of [String(team), `Team_${team}`]) {
+    const base = `${CG}Period(${p}).Jam(${j}).TeamJam(${id}).Fielding(${pos})`;
+    for (const prop of ['SkaterNumber', 'RosterNumber', 'Number']) {
+      const val = S[`${base}.${prop}`];
+      if (val) return String(val).replace('#', '').trim();
+    }
+    const skId = S[`${base}.Skater`];
+    if (skId) {
+      const num = S[`${CG}Team(${team}).Skater(${skId}).RosterNumber`] || S[`${CG}Team(${team}).Skater(${skId}).Number`];
+      if (num) return String(num).replace('#', '').trim();
+    }
+  }
+  return '';
+}
+
+function crgLineupSnapshotForJam(p, j, team) {
+  const positions = [['j', 'Jammer'], ['p', 'Pivot'], ['b1', 'Blocker1'], ['b2', 'Blocker2'], ['b3', 'Blocker3']];
+  return positions.map(([pos, crgPos]) => ({
+    pos,
+    num: crgFieldingNumber(p, j, team, crgPos),
+    name: crgFieldingName(p, j, team, crgPos)
+  })).filter(sk => sk.name || sk.num);
+}
+
+// Every Period(p).Jam(j) CRG has any data for, sorted oldest-first.
+function crgJamsInState() {
+  const out = new Map();
+  const re = /\.Period\((\d+)\)\.Jam\((\d+)\)/;
+  for (const key of Object.keys(S)) {
+    const m = key.match(re);
+    if (!m) continue;
+    const p = parseInt(m[1], 10);
+    const j = parseInt(m[2], 10);
+    if (!Number.isFinite(p) || !Number.isFinite(j) || j < 1) continue;
+    out.set(`${p}|${j}`, { p, j });
+  }
+  return [...out.values()].sort((a, b) => a.p - b.p || a.j - b.j);
+}
+
+// CRG seeds the upcoming jam as an empty placeholder, so only treat a jam as real
+// once it shows a score, a lead/lost/call flag, or a nonzero duration.
+function crgJamHasRun(p, j) {
+  const dur = normalizeDurationMs(S[`${CG}Period(${p}).Jam(${j}).Duration`]);
+  if (dur && dur > 0) return true;
+  for (const t of [1, 2]) {
+    if (crgTeamJamGet(p, j, t, 'JamScore', '') !== '') return true;
+    if (crgTeamJamBool(p, j, t, 'Lead')) return true;
+    if (crgTeamJamBool(p, j, t, 'Lost')) return true;
+    if (crgTeamJamBool(p, j, t, 'Calloff')) return true;
+  }
+  return false;
+}
+
+function crgReconstructJamEntry(p, j) {
+  const jamNumRaw = parseInt(S[`${CG}Period(${p}).Jam(${j}).Number`], 10);
+  const jamN = Number.isFinite(jamNumRaw) ? jamNumRaw : j;
+
+  const t1s = parseInt(crgTeamJamGet(p, j, 1, 'JamScore', '0'), 10) || 0;
+  const t2s = parseInt(crgTeamJamGet(p, j, 2, 'JamScore', '0'), 10) || 0;
+
+  // Prefer CRG's running total; null means "fill it in from cumulative scores later".
+  const rawTotal1 = crgTeamJamGet(p, j, 1, 'TotalScore', '');
+  const rawTotal2 = crgTeamJamGet(p, j, 2, 'TotalScore', '');
+  const total1 = rawTotal1 !== '' ? (parseInt(rawTotal1, 10) || 0) : null;
+  const total2 = rawTotal2 !== '' ? (parseInt(rawTotal2, 10) || 0) : null;
+
+  const t1L = crgTeamJamBool(p, j, 1, 'Lead');
+  const t2L = crgTeamJamBool(p, j, 2, 'Lead');
+  const lost = crgTeamJamBool(p, j, 1, 'Lost') || crgTeamJamBool(p, j, 2, 'Lost');
+  const call = crgTeamJamBool(p, j, 1, 'Calloff') || crgTeamJamBool(p, j, 2, 'Calloff');
+  const injury = crgTeamJamBool(p, j, 1, 'Injury') || crgTeamJamBool(p, j, 2, 'Injury')
+    || boolLike(S[`${CG}Period(${p}).Jam(${j}).Injury`]);
+
+  const durationMs = normalizeDurationMs(S[`${CG}Period(${p}).Jam(${j}).Duration`]);
+  const wentFullTime = durationMs !== null && durationMs >= 120000;
+
+  const lTeam = t1L ? 1 : t2L ? 2 : 0;
+
+  const spTeam = crgTeamJamBool(p, j, 1, 'StarPass') ? 1 : crgTeamJamBool(p, j, 2, 'StarPass') ? 2 : 0;
+  const spTo = spTeam ? (crgFieldingName(p, j, spTeam, 'Pivot') || crgFieldingName(p, j, spTeam, 'Jammer')) : '';
+
+  const t1JammerName = (spTeam === 1 && spTo) ? spTo : crgFieldingName(p, j, 1, 'Jammer');
+  const t2JammerName = (spTeam === 2 && spTo) ? spTo : crgFieldingName(p, j, 2, 'Jammer');
+
+  let jName = lTeam ? (lTeam === 1 ? t1JammerName : t2JammerName) : '';
+  if (!jName) jName = '—';
+
+  const oCls = injury ? 'b-lost' : call ? 'b-call' : lost ? 'b-lost' : 'b-dim';
+  const oLbl = injury ? 'Injury' : call ? 'Called' : lost ? 'Lost Lead' : 'Time';
+
+  const niTeams = [1, 2].filter(t => crgTeamJamBool(p, j, t, 'NoInitial'));
+
+  return {
+    p, jamN,
+    t1s, t2s,
+    total1, total2,
+    lTeam, jName,
+    t1JammerName, t2JammerName,
+    oCls, oLbl, lost,
+    calledElapsedSec: null,   // exact call-off elapsed can't be recovered from a static snapshot
+    calledClock: '',
+    wentFullTime,
+    spTeam,
+    spTo: spTo || '',
+    pjTeam: 0,                // power-jam kills need live box timing, so leave the ⚡ badge off on backfill
+    pjKill: null,
+    niTeams,
+    lineups: {
+      t1: crgLineupSnapshotForJam(p, j, 1),
+      t2: crgLineupSnapshotForJam(p, j, 2)
+    },
+    reconstructed: true
+  };
+}
+
+// Walk every real jam oldest-first and fill any totals CRG didn't hand us, using a
+// running sum. Rows that already carry a total (live-captured, or CRG-provided) win
+// and re-anchor the running score, so a stray gap self-corrects at the next known total.
+function backfillRunningTotals() {
+  const jams = jamHistory
+    .filter(r => r && r.type !== 'timeout')
+    .sort((a, b) => (Number(a.p) || 0) - (Number(b.p) || 0) || (Number(a.jamN) || 0) - (Number(b.jamN) || 0));
+  let run1 = 0, run2 = 0;
+  for (const jm of jams) {
+    if (jm.total1 == null) { run1 += Number(jm.t1s) || 0; jm.total1 = run1; }
+    else run1 = Number(jm.total1) || 0;
+    if (jm.total2 == null) { run2 += Number(jm.t2s) || 0; jm.total2 = run2; }
+    else run2 = Number(jm.total2) || 0;
+  }
+}
+
+function reconstructMissingJamsFromCrg() {
+  if (!S || !Object.keys(S).length) return { connected: false, added: 0, scanned: 0 };
+
+  const inJam = vb('InJam');
+  const liveP = vn('CurrentPeriodNumber', 1);
+  // During a jam, the live jam is off-limits (capture handles it). Between jams, the
+  // just-finished jam is fair game, so the boundary is the upcoming jam number.
+  const liveJ = inJam ? currentJamNumberForReadout() : vn('UpcomingJamNumber', currentJamNumberForReadout() + 1);
+  const endedBeforeLive = (p, j) => p < liveP || (p === liveP && j < liveJ);
+
+  const existing = new Set(
+    jamHistory
+      .filter(r => r && r.type !== 'timeout')
+      .map(r => `${Number(r.p) || 0}|${Number(r.jamN) || 0}`)
+  );
+
+  const candidates = crgJamsInState();
+  let added = 0;
+
+  for (const { p, j } of candidates) {
+    if (!endedBeforeLive(p, j)) continue;
+    if (!crgJamHasRun(p, j)) continue;
+    const entry = crgReconstructJamEntry(p, j);
+    const key = `${entry.p}|${entry.jamN}`;
+    if (existing.has(key)) continue;
+    existing.add(key);
+    jamHistory.push(entry);
+    added++;
+  }
+
+  if (added) {
+    backfillRunningTotals();
+    // Restore newest-first order so the recent strip and post-jam reconcile stay correct.
+    jamHistory.sort((a, b) => {
+      const ap = Number(a.p) || 0, bp = Number(b.p) || 0;
+      if (bp !== ap) return bp - ap;
+      const aj = Number(a.jamN) || 0, bj = Number(b.jamN) || 0;
+      if (bj !== aj) return bj - aj;
+      return (Number(b.seq) || 0) - (Number(a.seq) || 0);
+    });
+    if (jamHistory.length > MAX_HIST) jamHistory.length = MAX_HIST;
+    rebuildGameSummaryStatsFromHistory();
+    saveJamHistory();
+  }
+
+  return { connected: true, added, scanned: candidates.length };
+}
+
+function retrieveMissingJams() {
+  const btn = el('retrieve-missing-btn');
+  const status = el('retrieve-status');
+  const showStatus = (msg, kind) => {
+    if (!status) return;
+    status.textContent = msg;
+    status.classList.remove('is-good', 'is-warn');
+    if (kind) status.classList.add(kind);
+    status.hidden = false;
+  };
+
+  if (btn) { btn.classList.add('is-busy'); btn.disabled = true; }
+
+  // Defer a frame so the busy state paints before the synchronous scan runs.
+  setTimeout(() => {
+    let result;
+    try {
+      result = reconstructMissingJamsFromCrg();
+    } catch (err) {
+      result = { connected: !!(S && Object.keys(S).length), added: 0, scanned: 0, error: err };
+    }
+
+    if (!result.connected) {
+      showStatus('Not connected to CRG yet — connect to the scoreboard, then retrieve.', 'is-warn');
+    } else if (result.error) {
+      showStatus('Could not read CRG jam data. Open the WebSocket inspector (W) and try again.', 'is-warn');
+    } else if (result.added > 0) {
+      showStatus(`Retrieved ${result.added} earlier jam${result.added === 1 ? '' : 's'} from CRG. Backfilled rows are tagged.`, 'is-good');
+    } else if (result.scanned > 0) {
+      showStatus('History already matches CRG — nothing missing to retrieve.', 'is-good');
+    } else {
+      showStatus('No completed jams in the CRG feed yet.', 'is-warn');
+    }
+
+    renderHistoryPopup();
+    render();
+    if (typeof window.tmavUpdateInsideTrack === 'function') window.tmavUpdateInsideTrack(true);
+
+    if (btn) { btn.classList.remove('is-busy'); btn.disabled = false; }
+  }, 20);
+}
+
 function jamHistoryRowHtml(j, i, extraClass = '') {
   const cls = i % 2 === 0 ? 'hi' : 'lo';
 
@@ -4705,8 +5116,12 @@ function jamHistoryRowHtml(j, i, extraClass = '') {
   const outcomeLabel = String(j.oLbl || 'Time').replace('⏱️','').trim() || 'Time';
   const timeBadge = j.wentFullTime ? '<span class="jam-stopwatch" title="Full two-minute jam" aria-label="Full two-minute jam">⏱️</span>' : '';
 
-  return `<div class="jam-row ${cls} ${extraClass}">
-    <span class="jam-num">J${escHtml(j.jamN)}</span>
+  const reconCls = j.reconstructed ? ' jam-reconstructed' : '';
+  const reconTag = (j.reconstructed && String(extraClass).includes('jam-popup-fullrow'))
+    ? '<span class="jam-recon-tag">backfill</span>' : '';
+
+  return `<div class="jam-row ${cls} ${extraClass}${reconCls}">
+    <span class="jam-num">J${escHtml(j.jamN)}${reconTag}</span>
     <span class="jam-micro-div"></span>
     <span class="jam-scores">${scores}</span>
     <span class="jam-scorer">${leadBadge}${spBadge}</span>
@@ -5116,10 +5531,37 @@ function setCfgConnecting(isConnecting, message = '') {
 }
 
 // Connect to CRG's WebSocket endpoint.
-// Remote/local modes both flow through here; keep reconnect behavior boring and predictable.
+// Two connection flavors flow through here:
+//   • Direct (default): ws://host:port/WS on the local network.
+//   • WSProxy (?mode=remote): wss://host/WS through CRG's WSProxy relay, where TLS
+//     terminates on 443 at a hostname (e.g. name.derbystats.eu) so no port applies.
+// Reconnect behavior stays boring and predictable in both.
+function buildWsUrl(rawHost, rawPort, useProxy) {
+  let host = String(rawHost || '').trim();
+  const port = String(rawPort || '').trim();
+
+  // Accept a bare host, host:port, or a full pasted URL — strip scheme and split off any path.
+  host = host.replace(/^(wss?|https?):\/\//i, '');
+  let path = '/WS';
+  const slash = host.indexOf('/');
+  if (slash >= 0) {
+    const tail = host.slice(slash);
+    host = host.slice(0, slash);
+    if (tail && tail !== '/') path = tail; // honor a custom endpoint path if one was pasted
+  }
+
+  if (useProxy) {
+    // Only carry a port if the host itself already specifies one; otherwise let 443 apply.
+    return `wss://${host}${path}`;
+  }
+  const authority = /:\d+$/.test(host) ? host : `${host}:${port || '8000'}`;
+  return `ws://${authority}${path}`;
+}
+
 function connect(host, port) {
   setStatus('conn', 'Connecting…');
-  try { ws = new WebSocket(`ws://${host}:${port}/WS`); }
+  const url = buildWsUrl(host, port, wsProxyMode);
+  try { ws = new WebSocket(url); }
   catch(e) {
     if (isRemote) setCfgMessage('Invalid address.');
     setCfgConnecting(false);
@@ -5141,6 +5583,8 @@ function connect(host, port) {
       'ScoreBoard.CurrentGame.Team(*).Skater(*)',
       'ScoreBoard.CurrentGame.Team(*).Skater(*).Penalty(*)',
       'ScoreBoard.CurrentGame.Team(*).BoxTrip(*)',
+      'ScoreBoard.CurrentGame.Ref(*)',
+      'ScoreBoard.CurrentGame.Nso(*)',
       'ScoreBoard.CurrentGame.Period(*)',
       'ScoreBoard.CurrentGame.Period(*).Jam(*)',
       'ScoreBoard.CurrentGame.Period(*).Jam(*).TeamJam(*)',
@@ -5168,7 +5612,7 @@ function connect(host, port) {
       setCfgConnecting(false);
       el('app').hidden = true;
       el('cfg').hidden = false;
-      setCfgMessage(`Lost connection to ${host}:${port}. Check the host and try again.`);
+      setCfgMessage(`Lost connection to ${wsProxyMode ? host : `${host}:${port}`}. Check the ${wsProxyMode ? 'proxy address' : 'host'} and try again.`);
     } else {
       // Local install: keep retrying quietly in the background
       if (reconnTimer) clearTimeout(reconnTimer);
@@ -5205,7 +5649,7 @@ function connect(host, port) {
 // ─────────────────────────────────────────────
 // 🧩 Modals, hotkeys, penalty-code reference, and export tools
 // ─────────────────────────────────────────────
-const TMAV_VERSION='v1.3.7';
+const TMAV_VERSION='v1.4.0';
 const TMAV_BASE_CODES=[['A','High Block'],['B','Back Block'],['L','Low Block'],['H','Head Block'],['F','Forearm'],['E','Leg Block'],['C','Illegal Contact'],['D','Direction'],['M','Multiplayer'],['P','Illegal Position'],['X','Cut / Illegal Re-Entry'],['N','Interference'],['I','Illegal Procedure'],['G','Misconduct / Gross Misconduct']];
 const TMAV_RDCL_CODES=[['AS','Above the Shoulders'],['A','Arms'],['B','Back Blocking'],['L','Low Blocking'],['S','Stopping'],['DB','Directional Blocking'],['MB','Multi-Player Blocking'],['BB','Blocking Out of Bounds'],['AB','Assisting Out of Bounds'],['FR','Failure to Reform'],['OP','Skating Out of Play'],['BP','Blocking Out of Play'],['AP','Assisting Out of Play'],['SB','Skating Out of Bounds'],['CT','Cutting the Track'],['IB','Illegal Blocks'],['IP','Illegal Procedures'],['DG','Delay of Game'],['MS','Misconduct'],['GM','Gross Misconduct'],['F','Fighting']];
 const PENALTY_RULESETS={WFTDA:{note:'WFTDA-family flat-track codes. Current WFTDA cues group Cut and Illegal Re-Entry under X for Gaining Position.',codes:TMAV_BASE_CODES},MRDA:{note:'MRDA uses the WFTDA Rules of Flat Track Roller Derby framework, so this list mirrors the WFTDA-family flat-track codes.',codes:TMAV_BASE_CODES},JRDA:{note:'JRDA follows the WFTDA-licensed flat-track rules with youth-specific addenda, so this list mirrors the WFTDA-family flat-track codes.',codes:TMAV_BASE_CODES},RDCL:{note:'RDCL banked-track codes from the 2019 RDCL V3.2 officials hand-signal/rules materials. Confirm against the event packet if an event uses house modifications.',codes:TMAV_RDCL_CODES}};
@@ -5215,8 +5659,10 @@ function openModal(id){
   closeModals();
   const m=el(id);
   if(!m)return;
-  if(id==='modal-history')renderHistoryPopup();
+  if(id==='modal-history'){const rs=el('retrieve-status');if(rs){rs.hidden=true;rs.textContent='';rs.classList.remove('is-good','is-warn');}renderHistoryPopup();}
   if(id==='modal-penalties')renderPenaltyPopup();
+  if(id==='modal-officials')renderOfficialsPopup();
+  if(id==='modal-team-roster')renderTeamRosterPopup(_teamRosterTeam);
   if(id==='modal-debug')renderWsDebug();
   const v=el('tmav-version');
   if(v)v.textContent=TMAV_VERSION;
@@ -5271,6 +5717,220 @@ function renderPenaltyPopup(){
   txt('penalty-note',`${detectedLine}. ${data.note}`);
   const list=el('penalty-list');
   if(list){list.innerHTML=data.codes.map(([code,label])=>`<div class="penalty-item"><span class="penalty-code">${escHtml(code)}</span><strong>${escHtml(label)}</strong></div>`).join('');}
+}
+
+// ─────────────────────────────────────────────
+// 🦓 Officials roster (v1.4)
+// ─────────────────────────────────────────────
+// CRG keeps referees and NSOs in two separate lists — Ref(*) and Nso(*) — each carrying
+// the full role name plus name, league, and cert. The game also points HR/HNSO at whoever
+// is heading each crew. We read all of that live from S; nothing is stored locally.
+// Role names come straight from CRG's Official model, so the abbreviations and ordering
+// below mirror the standard officiating crew, not a house convention.
+const OFFICIAL_ROLES = {
+  'Head Referee':                   { abbr: 'HR',   order: 1 },
+  'Inside Pack Referee':            { abbr: 'IPR',  order: 2 },
+  'Jammer Referee':                 { abbr: 'JR',   order: 3 },
+  'Outside Pack Referee':           { abbr: 'OPR',  order: 4 },
+  'Referee Alternate':              { abbr: 'ALT',  order: 5 },
+  'Head Non-Skating Official':      { abbr: 'HNSO', order: 1 },
+  'Penalty Tracker':                { abbr: 'PT',   order: 2 },
+  'Penalty Lineup Tracker':         { abbr: 'PLT',  order: 3 },
+  'Penalty Wrangler':               { abbr: 'PW',   order: 4 },
+  'Inside Whiteboard Operator':     { abbr: 'IWB',  order: 5 },
+  'Jam Timer':                      { abbr: 'JT',   order: 6 },
+  'Scorekeeper':                    { abbr: 'SK',   order: 7 },
+  'ScoreBoard Operator':            { abbr: 'SBO',  order: 8 },
+  'Penalty Box Manager':            { abbr: 'PBM',  order: 9 },
+  'Penalty Box Timer':              { abbr: 'PBT',  order: 10 },
+  'Lineup Tracker':                 { abbr: 'LT',   order: 11 },
+  'Non-Skating Official Alternate': { abbr: 'ALT',  order: 12 }
+};
+
+function crgOfficialsFromState(kind) {
+  // kind is 'Ref' or 'Nso'. Each id is a CRG uuid; skip empty shells with no name or role.
+  const pfx = `${CG}${kind}(`;
+  const ids = new Set();
+  for (const k of Object.keys(S)) {
+    if (k.startsWith(pfx)) ids.add(k.slice(pfx.length).split(')')[0]);
+  }
+  const out = [];
+  for (const id of ids) {
+    const base = `${CG}${kind}(${id})`;
+    const name = String(S[`${base}.Name`] || '').trim();
+    const role = String(S[`${base}.Role`] || '').trim();
+    if (!name && !role) continue;
+    out.push({
+      id,
+      name,
+      role,
+      league: String(S[`${base}.League`] || '').trim(),
+      cert: String(S[`${base}.Cert`] || '').trim(),
+      swap: boolLike(S[`${base}.Swap`]),
+      p1team: String(S[`${base}.P1Team`] || '').trim()
+    });
+  }
+  return out;
+}
+
+function sortOfficials(list) {
+  return list.slice().sort((a, b) => {
+    const ra = OFFICIAL_ROLES[a.role]?.order ?? 99;
+    const rb = OFFICIAL_ROLES[b.role]?.order ?? 99;
+    if (ra !== rb) return ra - rb;
+    const ta = a.p1team === '1' ? 1 : a.p1team === '2' ? 2 : 9;
+    const tb = b.p1team === '1' ? 1 : b.p1team === '2' ? 2 : 9;
+    if (ta !== tb) return ta - tb;
+    return a.name.localeCompare(b.name);
+  });
+}
+
+// P1Team is a team reference; on CurrentGame that resolves to "1" or "2".
+function officialP1TeamNum(ref) {
+  const s = String(ref || '');
+  if (s === '1' || s === '2') return s;
+  const m = s.match(/Team[_(]?([12])\)?$/);
+  return m ? m[1] : '';
+}
+
+function officialTeamTag(p1team, swap) {
+  const t = officialP1TeamNum(p1team);
+  if (!t) return '';
+  const nm = String(v(`Team(${t}).Name`, '') || v(`Team(${t}).UniformColor`, '') || `Team ${t}`).trim();
+  const title = `Period 1 side: ${nm}${swap ? ' (swaps at half)' : ''}`;
+  return `<span class="officials-team officials-team-t${t}" title="${escHtml(title)}">T${t}${swap ? ' ⇄' : ''}</span>`;
+}
+
+function officialCardHtml(o, headId) {
+  const meta = OFFICIAL_ROLES[o.role];
+  const abbr = meta ? meta.abbr
+    : (o.role ? o.role.split(/\s+/).map(w => w[0]).join('').slice(0, 4).toUpperCase() : '—');
+  const isHead = headId && o.id === headId;
+  const bits = [];
+  if (o.league) bits.push(escHtml(o.league));
+  if (o.cert) bits.push(escHtml(o.cert));
+  const metaLine = bits.join(' · ');
+  const teamTag = officialTeamTag(o.p1team, o.swap);
+  return `<div class="officials-item">
+    <span class="officials-abbr" title="${escHtml(o.role || '')}">${escHtml(abbr)}</span>
+    <div class="officials-body">
+      <div class="officials-name">${escHtml(o.name || '—')}${isHead ? '<span class="officials-head">Head</span>' : ''}${teamTag}</div>
+      <div class="officials-role">${escHtml(o.role || 'Unknown role')}</div>
+      ${metaLine ? `<div class="officials-meta">${metaLine}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderOfficialsPopup() {
+  const refs = sortOfficials(crgOfficialsFromState('Ref'));
+  const nsos = sortOfficials(crgOfficialsFromState('Nso'));
+  const total = refs.length + nsos.length;
+  const connected = !!(S && Object.keys(S).length);
+
+  txt('officials-subtitle', connected
+    ? `${total} official${total === 1 ? '' : 's'} on the crew`
+    : 'Connect to CRG to load the officiating crew.');
+
+  const list = el('officials-list');
+  if (!list) return;
+
+  if (!total) {
+    list.innerHTML = `<div class="officials-empty">
+      <strong>${connected ? 'No officials entered in CRG yet.' : 'Not connected to CRG.'}</strong>
+      <div class="hotkey-meta">${connected
+        ? 'Officials appear here once they\u2019re added on the CRG Officials / Roster screen.'
+        : 'Connect to the scoreboard and the crew will populate automatically.'}</div>
+    </div>`;
+    return;
+  }
+
+  const headRef = String(S[`${CG}HR`] || '').trim();
+  const headNso = String(S[`${CG}HNSO`] || '').trim();
+
+  const section = (label, arr, headId) => {
+    if (!arr.length) return '';
+    return `<div class="officials-section">
+      <div class="officials-section-head">${escHtml(label)} <span class="officials-count">${arr.length}</span></div>
+      <div class="officials-grid">${arr.map(o => officialCardHtml(o, headId)).join('')}</div>
+    </div>`;
+  };
+
+  list.innerHTML = section('Referees', refs, headRef) + section('Non-Skating Officials', nsos, headNso);
+}
+
+// ─────────────────────────────────────────────
+// 👥 Team roster (v1.4.0)
+// ─────────────────────────────────────────────
+// Click a team name to see the whole roster in derby order. Skater numbers, names, and
+// roster pronouns come straight from CRG's Team(t).Skater(*) tree, which already streams.
+
+// Derby order = natural numeric sort on the roster number (so 2 sorts before 10 and
+// "007" reads as 7), with numberless skaters falling to the end and names as tie-break.
+function derbyNumberCompare(a, b) {
+  const na = String(a ?? '').trim();
+  const nb = String(b ?? '').trim();
+  if (!na && !nb) return 0;
+  if (!na) return 1;
+  if (!nb) return -1;
+  return na.localeCompare(nb, undefined, { numeric: true, sensitivity: 'base' });
+}
+
+function crgTeamRoster(t) {
+  const pfx = `${CG}Team(${t}).Skater(`;
+  const ids = new Set();
+  for (const k of Object.keys(S)) {
+    if (k.startsWith(pfx)) ids.add(k.slice(pfx.length).split(')')[0]);
+  }
+  const out = [];
+  for (const id of ids) {
+    const base = `${CG}Team(${t}).Skater(${id})`;
+    const name = String(S[`${base}.Name`] || '').replace(/⚠️/g, '').trim();
+    const number = String(S[`${base}.RosterNumber`] || S[`${base}.Number`] || '').replace('#', '').trim();
+    const pronouns = String(S[`${base}.Pronouns`] || '').trim();
+    if (!name && !number) continue;
+    out.push({ id, name, number, pronouns });
+  }
+  out.sort((a, b) => derbyNumberCompare(a.number, b.number) || a.name.localeCompare(b.name));
+  return out;
+}
+
+function renderTeamRosterPopup(t) {
+  const teamNum = Number(t) === 2 ? 2 : 1;
+  const roster = crgTeamRoster(teamNum);
+  const connected = !!(S && Object.keys(S).length);
+  const teamName = v(`Team(${teamNum}).TeamName`) || v(`Team(${teamNum}).FullName`) || v(`Team(${teamNum}).Name`, `Team ${teamNum}`);
+
+  txt('team-roster-title', teamName && teamName !== '—' ? teamName : `Team ${teamNum}`);
+  txt('team-roster-subtitle', connected
+    ? `${roster.length} skater${roster.length === 1 ? '' : 's'}`
+    : 'Connect to CRG to load the roster.');
+
+  const list = el('team-roster-list');
+  if (!list) return;
+
+  if (!roster.length) {
+    list.innerHTML = `<div class="officials-empty">
+      <strong>${connected ? 'No skaters on this roster yet.' : 'Not connected to CRG.'}</strong>
+      <div class="hotkey-meta">${connected
+        ? 'Skaters appear here once the team roster is entered in CRG.'
+        : 'Connect to the scoreboard and the roster will populate automatically.'}</div>
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = roster.map(sk => `<div class="roster-item">
+    <span class="roster-num">${sk.number ? escHtml(sk.number) : '—'}</span>
+    <div class="roster-body">
+      <div class="roster-name">${escHtml(sk.name || '—')}</div>
+      ${sk.pronouns ? `<div class="roster-pronouns">${escHtml(sk.pronouns)}</div>` : ''}
+    </div>
+  </div>`).join('');
+}
+
+let _teamRosterTeam = 1;
+function openTeamRoster(t) {
+  _teamRosterTeam = Number(t) === 2 ? 2 : 1;
+  openModal('modal-team-roster');
 }
 
 function sortedJamHistoryRows(){
@@ -5717,6 +6377,8 @@ function renderSkaterStatsPopup(name, number, teamName, teamNum, filterOpp) {
   const medals   = ['🥇','🥈','🥉'];
   const rankings = getJammerRankings(name, teamNum);
   const subParts = [escHtml(teamName)];
+  const pronouns = skaterPronounsByNameNumber(teamNum, name, number);
+  if (pronouns) subParts.push(escHtml(pronouns));
   if (rankings.teamRank) subParts.push(`${medals[rankings.teamRank - 1]} team`);
   if (rankings.gameRank) subParts.push(`${medals[rankings.gameRank - 1]} game`);
   txt('skater-stats-subtitle', subParts.join(' · '));
@@ -5876,7 +6538,10 @@ function openSkaterStatsPopup(teamNum) {
   openModal('modal-skater-stats');
 }
 
-document.addEventListener('click',e=>{const nga=e.target.closest('[data-new-game-action]');if(nga){handleNewGamePromptAction(nga.getAttribute('data-new-game-action')||'keep');return;}const newGameExportBtn=e.target.closest('#new-game-export-btn');if(newGameExportBtn){exportJamHistoryTxt();return;}const dbgClear=e.target.closest('#debug-clear-btn');if(dbgClear){clearWsDebugLog();return;}const dbgCopy=e.target.closest('#debug-copy-btn');if(dbgCopy){copyWsDebugLog();return;}const exportHistoryBtn=e.target.closest('#export-history-btn');if(exportHistoryBtn){exportJamHistoryTxt();return;}const exportJammersBtn=e.target.closest('#export-jammers-btn');if(exportJammersBtn){exportAllJammersHistoryTxt();return;}const exportJammerBtn=e.target.closest('#export-jammer-btn');if(exportJammerBtn){exportJammerHistoryTxt();return;}const clearBtn=e.target.closest('#clear-history-btn');if(clearBtn){clearHistoryFromPopup();return;}const closeBtn=e.target.closest('[data-close-modal]');if(closeBtn)closeModals();if(e.target.classList&&e.target.classList.contains('hotkey-modal'))closeModals();
+document.addEventListener('click',e=>{const nga=e.target.closest('[data-new-game-action]');if(nga){handleNewGamePromptAction(nga.getAttribute('data-new-game-action')||'keep');return;}const newGameExportBtn=e.target.closest('#new-game-export-btn');if(newGameExportBtn){exportJamHistoryTxt();return;}const dbgClear=e.target.closest('#debug-clear-btn');if(dbgClear){clearWsDebugLog();return;}const dbgCopy=e.target.closest('#debug-copy-btn');if(dbgCopy){copyWsDebugLog();return;}const retrieveMissingBtn=e.target.closest('#retrieve-missing-btn');if(retrieveMissingBtn){retrieveMissingJams();return;}const exportHistoryBtn=e.target.closest('#export-history-btn');if(exportHistoryBtn){exportJamHistoryTxt();return;}const exportJammersBtn=e.target.closest('#export-jammers-btn');if(exportJammersBtn){exportAllJammersHistoryTxt();return;}const exportJammerBtn=e.target.closest('#export-jammer-btn');if(exportJammerBtn){exportJammerHistoryTxt();return;}const clearBtn=e.target.closest('#clear-history-btn');if(clearBtn){clearHistoryFromPopup();return;}const closeBtn=e.target.closest('[data-close-modal]');if(closeBtn)closeModals();if(e.target.classList&&e.target.classList.contains('hotkey-modal'))closeModals();
+  // Team roster popup — tap/click a team name
+  const trEl=e.target.closest('[data-team-roster]');
+  if(trEl){const t=trEl.getAttribute('data-team-roster');if(t){openTeamRoster(Number(t));return;}}
   // Jammer stats popup — tap/click anywhere on the jammer row
   const jRow=e.target.closest('[data-jammer-team]');
   if(jRow){const t=jRow.getAttribute('data-jammer-team');if(t){openSkaterStatsPopup(Number(t));return;}}
@@ -5896,13 +6561,15 @@ document.addEventListener('click',e=>{const nga=e.target.closest('[data-new-game
 document.addEventListener('keydown',e=>{
   const focused=document.activeElement;
   if(focused&&(e.key==='Enter'||e.key===' ')){
+    const trEl=focused.closest&&focused.closest('[data-team-roster]');
+    if(trEl){e.preventDefault();const t=trEl.getAttribute('data-team-roster');if(t)openTeamRoster(Number(t));return;}
     const jRow=focused.closest&&focused.closest('[data-jammer-team]');
     if(jRow){e.preventDefault();const t=jRow.getAttribute('data-jammer-team');if(t)openSkaterStatsPopup(Number(t));return;}
     const histLink=focused.closest&&focused.closest('[data-jammer-hist-name]');
     if(histLink){e.preventDefault();const n=histLink.getAttribute('data-jammer-hist-name');const t=histLink.getAttribute('data-jammer-hist-team');if(n&&t)openSkaterStatsPopupByName(n,Number(t));return;}
   }
 });
-document.addEventListener('keydown',e=>{const tag=(e.target&&e.target.tagName||'').toLowerCase();if(tag==='input'||tag==='textarea'||e.target?.isContentEditable)return;const key=e.key.toLowerCase();if(key==='escape'){closeModals();return;}if(key==='a'){e.preventDefault();toggleModal('modal-about');}if(key==='j'){e.preventDefault();toggleModal('modal-history');}if(key==='p'){e.preventDefault();toggleModal('modal-penalties');}if(key==='w'){e.preventDefault();toggleModal('modal-debug');}
+document.addEventListener('keydown',e=>{const tag=(e.target&&e.target.tagName||'').toLowerCase();if(tag==='input'||tag==='textarea'||e.target?.isContentEditable)return;const key=e.key.toLowerCase();if(key==='escape'){closeModals();return;}if(key==='a'){e.preventDefault();toggleModal('modal-about');}if(key==='j'){e.preventDefault();toggleModal('modal-history');}if(key==='p'){e.preventDefault();toggleModal('modal-penalties');}if(key==='o'){e.preventDefault();toggleModal('modal-officials');}if(key==='w'){e.preventDefault();toggleModal('modal-debug');}
   if (key === 'd') { e.preventDefault(); toggleTheme(); return; }
 });
 
@@ -5959,8 +6626,8 @@ function cfgConnect() {
   if (!host) { setCfgConnecting(false); setCfgMessage('Please enter a host address.'); return; }
   setCfgConnecting(true, `Trying ${host}:${port}…`);
   setStatus('conn', `Connecting to ${host}:${port}…`);
-  // Save for reconnects
-  try { localStorage.setItem('tm-remote-host', host);
+  // Save for reconnects (proxy hostnames and LAN hosts are kept separate)
+  try { localStorage.setItem(wsProxyMode ? 'tm-proxy-host' : 'tm-remote-host', host);
         localStorage.setItem('tm-remote-port', port); } catch(_) {}
   connect(host, port);
 }
@@ -5972,14 +6639,26 @@ function showApp() {
 
 // boot
 let isRemote = false;
+let wsProxyMode = false;   // ?mode=remote → connect through CRG WSProxy over wss://
+function applyWsProxyModeToConfig() {
+  // Reshape the connection screen for a secure proxy address instead of a LAN host:port.
+  if (!wsProxyMode) return;
+  const sub = el('cfg-sub'); if (sub) sub.textContent = 'Connect via CRG WSProxy (secure wss://)';
+  const hl = el('cfg-host-label'); if (hl) hl.textContent = 'Proxy host';
+  const hostInput = el('cfg-host'); if (hostInput) hostInput.placeholder = 'name.derbystats.eu';
+  const portField = el('cfg-port-field'); if (portField) portField.hidden = true;
+}
 (function init() {
   loadJamHistory();
 
   const params = new URLSearchParams(window.location.search);
   const requestedMode = params.get('mode');
 
+  // The default flow (opened as a file, or served over http) already shows the connect
+  // screen and dials CRG directly. ?mode=remote now means WSProxy/wss instead of that.
+  wsProxyMode = requestedMode === 'remote';
   isRemote =
-    requestedMode === 'remote' ||
+    wsProxyMode ||
     (requestedMode !== 'local' && window.location.protocol === 'file:');
 
   const themeParam = params.get('theme');
@@ -5992,11 +6671,12 @@ let isRemote = false;
 
   if (isRemote) {
     // Show connection screen; restore last host if available
+    applyWsProxyModeToConfig();
     try {
-      const h = localStorage.getItem('tm-remote-host');
+      const h = localStorage.getItem(wsProxyMode ? 'tm-proxy-host' : 'tm-remote-host');
       const p = localStorage.getItem('tm-remote-port');
       if (h) el('cfg-host').value = h;
-      if (p) el('cfg-port').value = p;
+      if (p && !wsProxyMode) el('cfg-port').value = p;
     } catch(_) {}
     el('cfg').hidden = false;
   } else {
