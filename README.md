@@ -19,28 +19,42 @@
 - Real-time CRG Scoreboard data
 - Scores, lead jammer, and power jam indicators
 - Full lineup display (jammer + blockers)
-- Timeout tracking
+- Timeout and official review tracking
 - Score differential with leader indicator
 
 - **Inside Track (Context Engine)**
   - Surfaces scoring runs, droughts, lead changes, and momentum shifts
+  - Lead changes are settled from completed jams, so they read cleanly
   - Quiet during jams, active during lineups/timeouts
-  - Includes archive/history view
+  - Includes archive/history view (browse with ← / →)
 
 - **Jam History**
   - Recent jam summaries in main view
   - Full history overlay
-  - Export to text file (.txt)
+  - Export to text file (.txt), including a game summary and per-period summaries
   - Period-separated breakdown
 
 - **Penalty Tracking**
-  - Shows penalty code and time left in box
-  - Penalty heat (skaters at risk of fouling out)
-  - Visual escalation for high penalty counts (⚠️)
+  - Penalty heat — skaters at risk of fouling out, with ⚠️ escalation at 6
+  - In-box penalty code and time left in the box
+  - **Penalty Detail** overlay — tap the Penalty heat panel to open
+    - Grouped by team
+    - Sourced directly from CRG and keyed by skater, so counts match the scoreboard
+    - When CRG reports more penalties than can be identified by code, it says so
+      ("4 penalties — details available for 3") rather than guessing
+
+- **Rosters & Officials**
+  - Tap a team name to open that team's roster
+  - Press **O** for the officials list
+  - Both are read live from CRG
 
 - **Flexible Controls**
   - Keyboard hotkeys
   - Touch-friendly command dock for tablets
+
+- **Diagnostics**
+  - WebSocket Inspector (**W**) — a live view of incoming CRG updates, including the
+    `Penalty(*)` properties CRG is actually sending, for verifying data during a test game
 
 - **Network-Aware Connection**
   - Auto-connects when served from CRG
@@ -65,10 +79,17 @@
 | A | About / Help |
 | J | Jam History |
 | P | Penalty Codes |
-| X | Penalty Detail |
+| O | Officials |
 | T | Inside Track History |
+| ← / → | Browse Inside Track history (while it's open) |
 | I | Mute Inside Track |
 | D | Toggle Light/Dark Mode |
+| W | WebSocket Inspector (diagnostics) |
+| Esc | Close the open overlay |
+
+**Penalty Detail** has no keyboard shortcut — tap the **Penalty heat** panel to open it.
+
+On tablets, the same actions are available from the command dock: About, History, Codes, Officials, Inside Track, Mute, and Theme.
 
 ---
 
